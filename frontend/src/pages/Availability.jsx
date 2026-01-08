@@ -10,7 +10,7 @@ export default function Availability() {
   useEffect(() => {
     const fetchAvailability = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/availability");
+        const res = await axios.get("https://calcom-kdz8.onrender.com/api/availability");
         setSchedule(res.data);
       } catch (err) {
         console.error(err);
