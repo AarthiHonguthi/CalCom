@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-slate-50 text-slate-900;
+}
+
+/* Custom Calendar Overrides to match Tailwind theme */
+.react-calendar {
+    @apply w-full border-none bg-transparent font-sans;
+}
+
+.react-calendar__tile--active {
+    @apply bg-slate-900 text-white rounded-md !important;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    @apply bg-slate-200 rounded-md;
+}
+
+.react-calendar__navigation button {
+    @apply text-xl min-w-[44px] bg-transparent;
+}
+.toggle-checkbox:checked {
+    @apply right-0 border-green-400;
+    right: 0;
+    border-color: #68D391;
+}
+
+.toggle-checkbox:checked+.toggle-label {
+    @apply bg-green-400;
+    background-color: #68D391;
+}
+
+.toggle-checkbox {
+    right: auto;
+    left: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.toggle-label {
+    width: 2.5rem;
+}
