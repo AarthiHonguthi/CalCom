@@ -3,9 +3,10 @@ import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import DateOverrideModal from "../components/DateOverrideModal";
 
-import { ChevronLeft, Plus, Copy } from "lucide-react";
+import { ChevronLeft, Plus, Copy, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+/* Toggle */
 function Toggle({ enabled, onChange }) {
   return (
     <button
@@ -36,6 +37,7 @@ export default function AvailabilityEditor() {
 
   const [timezone, setTimezone] = useState("Europe/London");
   const [openOverride, setOpenOverride] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const [schedule, setSchedule] = useState({
     Sunday: { enabled: false, slots: [] },
@@ -47,30 +49,20 @@ export default function AvailabilityEditor() {
     Saturday: { enabled: false, slots: [] },
   });
 
-  const [saving, setSaving] = useState(false);
-
   const handleSave = async () => {
     try {
       setSaving(true);
 
-      // convert schedule (day names) -> numeric keys used by backend (0=Sunday..6=Saturday)
       const payloadSchedule = {};
       DAYS.forEach((day, i) => {
-        const dayEntry = schedule[day];
-        if (dayEntry && dayEntry.enabled && dayEntry.slots.length > 0) {
-          // backend expects array of {start, end}
-          payloadSchedule[i] = dayEntry.slots.map((s) => ({
-            start: s.start,
-            end: s.end,
-          }));
-        } else {
-          payloadSchedule[i] = [];
-        }
+        const d = schedule[day];
+        payloadSchedule[i] = d.enabled && d.slots.length ? d.slots : [];
       });
 
       await axios.put("https://calcom-kdz8.onrender.com/api/availability", {
         schedule: payloadSchedule,
       });
+
       alert("Availability saved");
     } catch (err) {
       console.error(err);
@@ -102,17 +94,13 @@ export default function AvailabilityEditor() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            {/* <span className="text-sm text-slate-400">Set as Default</span>
-            <Toggle enabled={true} onChange={() => {}} /> */}
-            <button
-              onClick={handleSave}
-              disabled={saving}
-              className="px-4 py-2 rounded-md border border-slate-700 hover:bg-[#1a1a1a] disabled:opacity-60"
-            >
-              {saving ? "Saving..." : "Save"}
-            </button>
-          </div>
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="px-4 py-2 rounded-md border border-slate-700 hover:bg-[#1a1a1a] disabled:opacity-60"
+          >
+            {saving ? "Saving..." : "Save"}
+          </button>
         </div>
 
         {/* MAIN GRID */}
@@ -120,11 +108,8 @@ export default function AvailabilityEditor() {
           {/* LEFT */}
           <div className="border border-slate-800 rounded-xl p-5 space-y-4">
             {DAYS.map((day, idx) => (
-              <div
-                key={day}
-                className="flex items-center justify-between gap-4"
-              >
-                <div className="flex items-center gap-4">
+              <div key={day} className="flex justify-between items-start">
+                <div className="flex items-center gap-4 w-40">
                   <Toggle
                     enabled={schedule[day].enabled}
                     onChange={(val) =>
@@ -134,98 +119,97 @@ export default function AvailabilityEditor() {
                       })
                     }
                   />
-                  <span className="w-20">{day}</span>
+                  <span>{day}</span>
                 </div>
 
                 {schedule[day].enabled && (
-                  <div className="flex items-center gap-2">
-                    <div className="flex flex-col gap-2">
-                      {schedule[day].slots.map((slot, sIdx) => (
-                        <div key={sIdx} className="flex items-center gap-2">
-                          <input
-                            type="time"
-                            value={slot.start}
-                            onChange={(e) => {
-                              const newSlots = schedule[day].slots.map(
-                                (ss, i) =>
-                                  i === sIdx
-                                    ? { ...ss, start: e.target.value }
-                                    : ss
-                              );
-                              setSchedule({
-                                ...schedule,
-                                [day]: { ...schedule[day], slots: newSlots },
-                              });
-                            }}
-                            className="bg-[#111] border border-slate-700 rounded-md px-2 py-1 text-sm"
-                          />
-                          <span>-</span>
-                          <input
-                            type="time"
-                            value={slot.end}
-                            onChange={(e) => {
-                              const newSlots = schedule[day].slots.map(
-                                (ss, i) =>
-                                  i === sIdx
-                                    ? { ...ss, end: e.target.value }
-                                    : ss
-                              );
-                              setSchedule({
-                                ...schedule,
-                                [day]: { ...schedule[day], slots: newSlots },
-                              });
-                            }}
-                            className="bg-[#111] border border-slate-700 rounded-md px-2 py-1 text-sm"
-                          />
-                          <button
-                            onClick={() => {
-                              const newSlots = schedule[day].slots.filter(
-                                (_, i) => i !== sIdx
-                              );
-                              setSchedule({
-                                ...schedule,
-                                [day]: { ...schedule[day], slots: newSlots },
-                              });
-                            }}
-                            className="p-2 hover:bg-[#1a1a1a] rounded-md text-sm"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      ))}
-                      <div className="flex items-center gap-2 mt-1">
-                        <button
-                          onClick={() => {
-                            const newSlots = [
-                              ...schedule[day].slots,
-                              { start: "09:00", end: "17:00" },
-                            ];
+                  <div className="flex flex-col gap-2">
+                    {schedule[day].slots.map((slot, sIdx) => (
+                      <div key={sIdx} className="flex items-center gap-2">
+                        <input
+                          type="time"
+                          value={slot.start}
+                          onChange={(e) => {
+                            const slots = [...schedule[day].slots];
+                            slots[sIdx].start = e.target.value;
                             setSchedule({
                               ...schedule,
-                              [day]: { ...schedule[day], slots: newSlots },
+                              [day]: { ...schedule[day], slots },
                             });
                           }}
+                          className="bg-[#111] border border-slate-700 rounded-md px-2 py-1 text-sm"
+                        />
+
+                        <span className="text-slate-400">–</span>
+
+                        <input
+                          type="time"
+                          value={slot.end}
+                          onChange={(e) => {
+                            const slots = [...schedule[day].slots];
+                            slots[sIdx].end = e.target.value;
+                            setSchedule({
+                              ...schedule,
+                              [day]: { ...schedule[day], slots },
+                            });
+                          }}
+                          className="bg-[#111] border border-slate-700 rounded-md px-2 py-1 text-sm"
+                        />
+
+                        <button
+                          onClick={() =>
+                            setSchedule({
+                              ...schedule,
+                              [day]: {
+                                ...schedule[day],
+                                slots: [
+                                  ...schedule[day].slots,
+                                  { start: "09:00", end: "17:00" },
+                                ],
+                              },
+                            })
+                          }
                           className="p-2 hover:bg-[#1a1a1a] rounded-md"
+                          title="Add slot"
                         >
-                          <Plus size={16} />
+                          <Plus size={14} />
                         </button>
+
                         <button
                           onClick={() => {
-                            // copy from previous day if exists
                             const prevIdx = idx === 0 ? 6 : idx - 1;
                             const prevDay = DAYS[prevIdx];
-                            const copySlots = schedule[prevDay]?.slots || [];
                             setSchedule({
                               ...schedule,
-                              [day]: { ...schedule[day], slots: copySlots },
+                              [day]: {
+                                ...schedule[day],
+                                slots: schedule[prevDay]?.slots || [],
+                              },
                             });
                           }}
                           className="p-2 hover:bg-[#1a1a1a] rounded-md"
+                          title="Copy previous day"
                         >
-                          <Copy size={16} />
+                          <Copy size={14} />
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            const slots = schedule[day].slots.filter(
+                              (_, i) => i !== sIdx
+                            );
+                            setSchedule({
+                              ...schedule,
+                              [day]: { ...schedule[day], slots },
+                            });
+                          }}
+                          className="p-2 hover:bg-red-500/10 rounded-md text-red-400"
+                          title="Delete slot"
+                        >
+                          <Trash2 size={14} />
                         </button>
                       </div>
-                    </div>
+                    ))}
                   </div>
                 )}
               </div>
@@ -271,7 +255,6 @@ export default function AvailabilityEditor() {
         </div>
       </main>
 
-      {/* OVERRIDE MODAL */}
       <DateOverrideModal
         open={openOverride}
         onClose={() => setOpenOverride(false)}
