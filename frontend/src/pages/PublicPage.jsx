@@ -31,7 +31,7 @@ export default function PublicPage() {
           {events.map((e) => (
             <div
               key={e.id}
-              className="bg-[#111] border border-slate-800 rounded-lg p-4"
+              className="bg-[#111] border border-[#3c3c3c] rounded-lg p-4"
             >
               <div className="flex items-center justify-between">
                 <div>

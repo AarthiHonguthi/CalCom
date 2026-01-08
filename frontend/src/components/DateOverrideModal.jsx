@@ -17,9 +17,9 @@ export default function DateOverrideModal({ open, onClose }) {
 
   return (
     <div className="fixed inset-0 z-[99999] bg-black/70 flex items-center justify-center">
-      <div className="w-full max-w-4xl bg-[#0b0b0b] border border-slate-800 rounded-2xl overflow-hidden grid grid-cols-2">
+      <div className="w-full max-w-4xl bg-[#0b0b0b] border border-[#3c3c3c] rounded-2xl overflow-hidden grid grid-cols-2">
         {/* LEFT – CALENDAR */}
-        <div className="p-6 border-r border-slate-800">
+        <div className="p-6 border-r border-[#3c3c3c]">
           <h3 className="text-white font-medium mb-4">
             Select the dates to override
           </h3>

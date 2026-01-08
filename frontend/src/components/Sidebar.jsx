@@ -125,7 +125,7 @@ export default function Sidebar({ events = [] }) {
       {/* SIDEBAR */}
       <aside className="fixed left-0 top-0 h-screen w-64 bg-[#171717] text-slate-300 flex flex-col">
         {/* TOP: user + search button */}
-        <div className="px-4 py-4 border-b border-slate-800 flex items-center justify-between">
+        <div className="px-4 py-4 border-b border-[#3c3c3c] flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-full bg-slate-600 flex items-center justify-center text-xs font-bold text-black">
               AD
@@ -136,7 +136,7 @@ export default function Sidebar({ events = [] }) {
           {/* Search icon like Cal.com */}
           <button
             onClick={() => setOpen(true)}
-            className="p-2 rounded-md hover:bg-[#262626] text-slate-300 hover:text-white transition"
+            className="p-2 rounded-md hover:bg-[#171717] text-slate-300 hover:text-white transition"
             title="Search (Ctrl+K)"
           >
             <Search size={16} />
@@ -264,7 +264,7 @@ export default function Sidebar({ events = [] }) {
         </nav>
 
         {/* FOOTER */}
-        <div className="border-t border-slate-800 p-3 space-y-1">
+        <div className="border-t border-[#3c3c3c] p-3 space-y-1">
           <button
             onClick={() => navigate("/public")}
             className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-[#262626] rounded-md"
@@ -287,11 +287,11 @@ export default function Sidebar({ events = [] }) {
           onMouseDown={() => setOpen(false)}
         >
           <div
-            className="w-full max-w-2xl bg-[#0b0b0b] border border-slate-800 rounded-xl shadow-2xl overflow-hidden"
+            className="w-full max-w-2xl bg-[#0b0b0b] border border-[#3c3c3c] rounded-xl shadow-2xl overflow-hidden"
             onMouseDown={(e) => e.stopPropagation()}
           >
             {/* Input */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-800">
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-[#3c3c3c]">
               <Search size={18} className="text-slate-400" />
               <input
                 ref={inputRef}
@@ -347,7 +347,7 @@ export default function Sidebar({ events = [] }) {
             </div>
 
             {/* Footer hints */}
-            <div className="px-4 py-2 border-t border-slate-800 text-xs text-slate-500 flex items-center justify-between">
+            <div className="px-4 py-2 border-t border-[#3c3c3c] text-xs text-slate-500 flex items-center justify-between">
               <span>Enter: Open</span>
               <span>Esc: Close • Ctrl+K: Toggle</span>
             </div>

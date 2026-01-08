@@ -48,9 +48,9 @@ export default function CreateEvent() {
   return createPortal(
     <div className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/80">
       {/* MODAL BOX */}
-      <div className="w-full max-w-xl rounded-2xl bg-[#0b0b0b] border border-slate-800 shadow-2xl">
+      <div className="w-full max-w-xl rounded-2xl bg-[#0b0b0b] border border-[#3c3c3c] shadow-2xl">
         {/* HEADER */}
-        <div className="flex items-start justify-between px-6 py-4 border-b border-slate-800">
+        <div className="flex items-start justify-between px-6 py-4 border-b border-[#3c3c3c]">
           <div>
             <h2 className="text-lg font-semibold text-white">
               Add a new event type
@@ -137,7 +137,7 @@ export default function CreateEvent() {
         </div>
 
         {/* FOOTER */}
-        <div className="flex justify-end gap-3 px-6 py-4 border-t border-slate-800">
+        <div className="flex justify-end gap-3 px-6 py-4 border-t border-[#3c3c3c]">
           <button
             onClick={() => navigate("/")}
             className="text-sm text-slate-400 hover:text-white"

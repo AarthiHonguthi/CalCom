@@ -78,7 +78,7 @@ export default function Bookings() {
         </div>
 
         {visible.length === 0 ? (
-          <div className="mt-10 border border-dashed border-slate-800 rounded-xl h-[360px] flex flex-col items-center justify-center text-center">
+          <div className="mt-10 border border-dashed border-[#3c3c3c] rounded-xl h-[360px] flex flex-col items-center justify-center text-center">
             <div className="h-14 w-14 rounded-full bg-[#404040] flex items-center justify-center mb-4">
               <Calendar size={26} className="text-slate-400" />
             </div>

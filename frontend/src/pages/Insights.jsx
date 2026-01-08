@@ -15,7 +15,7 @@ export default function Insights() {
         </div>
 
         {/* HERO / BANNER */}
-        <div className="relative rounded-2xl bg-gradient-to-r from-[#1a1a1a] to-[#0f0f0f] border border-slate-800 p-8 mb-10 overflow-hidden">
+        <div className="relative rounded-2xl bg-gradient-to-r from-[#1a1a1a] to-[#0f0f0f] border border-[#3c3c3c] p-8 mb-10 overflow-hidden">
           <div className="max-w-xl">
             <h2 className="text-2xl font-semibold text-white mb-3">
               Make informed decisions with Insights
@@ -73,7 +73,7 @@ export default function Insights() {
 
 function StatCard({ title, value, icon }) {
   return (
-    <div className="bg-[#111] border border-slate-800 rounded-xl px-5 py-4 min-w-[140px]">
+    <div className="bg-[#111] border border-[#3c3c3c] rounded-xl px-5 py-4 min-w-[140px]">
       <div className="text-xs text-slate-400 mb-1">{title}</div>
       <div className="flex items-center gap-2">
         <span className="text-2xl font-semibold text-white">{value}</span>
@@ -85,7 +85,7 @@ function StatCard({ title, value, icon }) {
 
 function FeatureCard({ icon, title, description }) {
   return (
-    <div className="bg-[#111] border border-slate-800 rounded-xl p-5 hover:border-slate-700 transition">
+    <div className="bg-[#111] border border-[#3c3c3c] rounded-xl p-5 hover:border-[#171717] transition">
       <div className="flex items-center gap-3 mb-3">
         <div className="w-9 h-9 rounded-md bg-[#1a1a1a] flex items-center justify-center">
           {icon}

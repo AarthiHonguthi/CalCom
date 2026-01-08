@@ -118,7 +118,7 @@ export default function Workflows() {
 
 function TemplateCard({ icon, title, subtitle }) {
   return (
-    <div className="bg-[#111] border border-slate-800 rounded-xl px-4 py-4 hover:border-slate-700 transition cursor-pointer">
+    <div className="bg-[#111] border border-[#3c3c3c] rounded-xl px-4 py-4 hover:border-[#171717] transition cursor-pointer">
       <div className="flex items-center gap-3 mb-2">
         <div className="w-8 h-8 rounded-md bg-[#1a1a1a] flex items-center justify-center">
           {icon}

@@ -105,7 +105,7 @@ export default function Dashboard() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search"
-          className="mb-6 w-full max-w-sm bg-[#111] border border-slate-800 text-sm rounded-md px-4 py-2 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-600"
+          className="mb-6 w-full max-w-sm bg-[#111] border border-[#3c3c3c] text-sm rounded-md px-4 py-2 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-600"
         />
 
         {/* EVENT LIST */}
@@ -118,7 +118,7 @@ export default function Dashboard() {
             filteredEvents.map((event) => (
               <div
                 key={event.id}
-                className="bg-[#111] border border-slate-800 rounded-lg px-4 py-4 flex items-center justify-between hover:border-slate-700 transition"
+                className="bg-[#111] border border-[#3c3c3c] rounded-lg px-4 py-4 flex items-center justify-between hover:border-[#171717] transition"
               >
                 {/* LEFT */}
                 <div>
@@ -162,7 +162,7 @@ export default function Dashboard() {
 
                   <button
                     onClick={() => window.open(`/${event.slug}`, "_blank")}
-                    className="p-2 rounded-md hover:bg-[#1a1a1a]"
+                    className="p-2 rounded-md hover:bg-[#171717]"
                     title="Preview"
                   >
                     <ExternalLink size={16} />
@@ -170,7 +170,7 @@ export default function Dashboard() {
 
                   <button
                     onClick={() => copyLink(event.slug)}
-                    className="p-2 rounded-md hover:bg-[#1a1a1a]"
+                    className="p-2 rounded-md hover:bg-[#171717]"
                     title="Copy link"
                   >
                     <Copy size={16} />
@@ -185,16 +185,16 @@ export default function Dashboard() {
                       onClick={() =>
                         setOpenMenuId(openMenuId === event.id ? null : event.id)
                       }
-                      className="p-2 rounded-md hover:bg-[#1a1a1a]"
+                      className="p-2 rounded-md hover:bg-[#171717]"
                     >
                       <MoreHorizontal size={16} />
                     </button>
 
                     {openMenuId === event.id && (
-                      <div className="absolute right-0 mt-2 w-40 bg-[#111] border border-slate-800 rounded-md shadow-xl z-20">
+                      <div className="absolute right-0 mt-2 w-40 bg-[#111] border border-[#3c3c3c] rounded-md shadow-xl z-20">
                         <button
                           onClick={() => navigate(`/edit/${event.id}`)}
-                          className="block w-full text-left px-4 py-2 text-sm hover:bg-[#1a1a1a]"
+                          className="block w-full text-left px-4 py-2 text-sm hover:bg-[#171717]"
                         >
                           Edit
                         </button>

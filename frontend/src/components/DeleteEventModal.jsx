@@ -10,7 +10,7 @@ export default function DeleteEventModal({ open, onClose, onConfirm }) {
     >
       {/* MODAL */}
       <div
-        className="w-full max-w-md rounded-xl bg-[#0b0b0b] border border-slate-800 shadow-2xl p-6"
+        className="w-full max-w-md rounded-xl bg-[#0b0b0b] border border-[#3c3c3c] shadow-2xl p-6"
         onClick={(e) => e.stopPropagation()}
       >
         {/* HEADER */}

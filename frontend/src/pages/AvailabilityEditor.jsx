@@ -82,7 +82,7 @@ export default function AvailabilityEditor() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate(-1)}
-              className="p-2 rounded-md hover:bg-[#1a1a1a]"
+              className="p-2 rounded-md hover:bg-[#171717]"
             >
               <ChevronLeft size={18} />
             </button>
@@ -97,7 +97,7 @@ export default function AvailabilityEditor() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-4 py-2 rounded-md border border-slate-700 hover:bg-[#1a1a1a] disabled:opacity-60"
+            className="px-4 py-2 rounded-md border border-slate-700 hover:bg-[#171717] disabled:opacity-60"
           >
             {saving ? "Saving..." : "Save"}
           </button>
@@ -106,7 +106,7 @@ export default function AvailabilityEditor() {
         {/* MAIN GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
           {/* LEFT */}
-          <div className="border border-slate-800 rounded-xl p-5 space-y-4">
+          <div className="border border-[#3c3c3c] rounded-xl p-5 space-y-4">
             {DAYS.map((day, idx) => (
               <div key={day} className="flex justify-between items-start">
                 <div className="flex items-center gap-4 w-40">
@@ -169,7 +169,7 @@ export default function AvailabilityEditor() {
                               },
                             })
                           }
-                          className="p-2 hover:bg-[#1a1a1a] rounded-md"
+                          className="p-2 hover:bg-[#171717] rounded-md"
                           title="Add slot"
                         >
                           <Plus size={14} />
@@ -187,7 +187,7 @@ export default function AvailabilityEditor() {
                               },
                             });
                           }}
-                          className="p-2 hover:bg-[#1a1a1a] rounded-md"
+                          className="p-2 hover:bg-[#171717] rounded-md"
                           title="Copy previous day"
                         >
                           <Copy size={14} />
@@ -218,7 +218,7 @@ export default function AvailabilityEditor() {
 
           {/* RIGHT */}
           <div className="space-y-4">
-            <div className="border border-slate-800 rounded-xl p-4">
+            <div className="border border-[#3c3c3c] rounded-xl p-4">
               <p className="text-sm mb-2">Timezone</p>
               <select
                 value={timezone}
@@ -231,9 +231,9 @@ export default function AvailabilityEditor() {
               </select>
             </div>
 
-            <div className="border border-slate-800 rounded-xl p-4">
+            <div className="border border-[#3c3c3c] rounded-xl p-4">
               <p className="text-sm mb-2">Something doesn't look right?</p>
-              <button className="w-full px-3 py-2 border border-slate-700 rounded-md hover:bg-[#1a1a1a]">
+              <button className="w-full px-3 py-2 border border-slate-700 rounded-md hover:bg-[#171717]">
                 Launch troubleshooter
               </button>
             </div>
@@ -241,14 +241,14 @@ export default function AvailabilityEditor() {
         </div>
 
         {/* DATE OVERRIDES */}
-        <div className="mt-6 border border-slate-800 rounded-xl p-5">
+        <div className="mt-6 border border-[#3c3c3c] rounded-xl p-5">
           <h3 className="font-medium mb-1">Date overrides</h3>
           <p className="text-sm text-slate-400 mb-3">
             Add dates when your availability changes from your daily hours.
           </p>
           <button
             onClick={() => setOpenOverride(true)}
-            className="px-4 py-2 rounded-md border border-slate-700 hover:bg-[#1a1a1a]"
+            className="px-4 py-2 rounded-md border border-slate-700 hover:bg-[#171717]"
           >
             + Add an override
           </button>

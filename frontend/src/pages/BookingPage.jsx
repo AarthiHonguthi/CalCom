@@ -57,9 +57,9 @@ export default function BookingPage() {
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
-      <div className="w-full max-w-6xl bg-[#0b0b0b] rounded-2xl border border-slate-800 shadow-2xl grid grid-cols-1 md:grid-cols-[280px_1fr_280px] overflow-hidden">
+      <div className="w-full max-w-6xl bg-[#0b0b0b] rounded-2xl border border-[#3c3c3c] shadow-2xl grid grid-cols-1 md:grid-cols-[280px_1fr_280px] overflow-hidden">
         {/* ================= LEFT ================= */}
-        <div className="p-6 border-r border-slate-800">
+        <div className="p-6 border-r border-[#3c3c3c]">
           <div className="flex items-center gap-2 mb-4">
             <div className="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center text-sm">
               👤
@@ -88,7 +88,7 @@ export default function BookingPage() {
         </div>
 
         {/* ================= MIDDLE (CALENDAR) ================= */}
-        <div className="p-6 border-r border-slate-800">
+        <div className="p-6 border-r border-[#3c3c3c]">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-medium">
               {selectedDate.toLocaleString("default", {
@@ -100,13 +100,13 @@ export default function BookingPage() {
             <div className="flex gap-1">
               <button
                 onClick={() => setSelectedDate(new Date(year, month - 1, 1))}
-                className="p-1 hover:bg-[#1a1a1a] rounded"
+                className="p-1 hover:bg-[#171717] rounded"
               >
                 <ChevronLeft size={16} />
               </button>
               <button
                 onClick={() => setSelectedDate(new Date(year, month + 1, 1))}
-                className="p-1 hover:bg-[#1a1a1a] rounded"
+                className="p-1 hover:bg-[#171717] rounded"
               >
                 <ChevronRight size={16} />
               </button>

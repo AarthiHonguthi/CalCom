@@ -35,7 +35,7 @@ export default function Availability() {
         {/* AVAILABILITY CARD */}
         <div
           onClick={() => navigate("/availability/1")}
-          className="cursor-pointer bg-[#111] border border-slate-800 rounded-xl px-6 py-5 flex items-center justify-between hover:border-slate-600 transition"
+          className="cursor-pointer bg-[#111] border border-[#3c3c3c] rounded-xl px-6 py-5 flex items-center justify-between hover:border-[#171717] transition"
         >
           {/* LEFT */}
           <div>

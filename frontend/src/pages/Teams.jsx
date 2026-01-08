@@ -35,7 +35,7 @@ export default function Teams() {
 
         {/* HERO */}
         <div className="px-6">
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1a1a1a] via-[#141414] to-[#0f0f0f] border border-slate-800">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1a1a1a] via-[#141414] to-[#0f0f0f] border border-[#3c3c3c]">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 p-10 items-center">
               {/* LEFT CONTENT */}
               <div>
@@ -142,7 +142,7 @@ export default function Teams() {
 /* ----------------- Feature Card ----------------- */
 function Feature({ icon, title, desc }) {
   return (
-    <div className="bg-[#111] border border-slate-800 rounded-xl p-5 hover:border-slate-700 transition">
+    <div className="bg-[#111] border border-[#3c3c3c] rounded-xl p-5 hover:border-[#171717] transition">
       <div className="flex items-center gap-3 mb-3">
         <div className="h-9 w-9 rounded-full bg-[#1a1a1a] flex items-center justify-center">
           {icon}

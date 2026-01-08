@@ -72,9 +72,9 @@ export default function ConfirmBooking() {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-6 text-white">
-      <div className="w-full max-w-4xl bg-[#0b0b0b] border border-slate-800 rounded-2xl grid grid-cols-1 md:grid-cols-2 overflow-hidden shadow-2xl">
+      <div className="w-full max-w-4xl bg-[#0b0b0b] border border-[#3c3c3c] rounded-2xl grid grid-cols-1 md:grid-cols-2 overflow-hidden shadow-2xl">
         {/* ================= LEFT SUMMARY ================= */}
-        <div className="p-6 border-b md:border-b-0 md:border-r border-slate-800">
+        <div className="p-6 border-b md:border-b-0 md:border-r border-[#3c3c3c]">
           <div className="flex items-center gap-3 mb-5">
             <div className="h-9 w-9 rounded-full bg-slate-700 flex items-center justify-center">
               👤
