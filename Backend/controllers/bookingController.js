@@ -190,7 +190,11 @@ exports.createBooking = async (req, res) => {
 
     res.json(result.rows[0]);
   } catch {
-    res.status(500).send("Server Error");
+    console.error("createBooking error:", arguments, new Error().stack);
+    // Try to return the error message when available to aid debugging (safe for staging)
+    const err = arguments[0] || new Error("Unknown error");
+    const msg = err && err.message ? err.message : "Server Error";
+    res.status(500).json({ error: msg });
   }
 };
 
