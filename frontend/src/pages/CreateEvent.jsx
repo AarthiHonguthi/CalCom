@@ -36,7 +36,7 @@ export default function CreateEvent() {
   /* ================= SUBMIT ================= */
   const handleSubmit = async () => {
     try {
-      await axios.post("http://localhost:5000/api/event-types", form);
+      await axios.post("https://calcom-kdz8.onrender.com/api/event-types", form);
 
       navigate("/");
     } catch {
@@ -90,7 +90,7 @@ export default function CreateEvent() {
             </label>
             <input
               readOnly
-              value={`http://localhost:5173/book/${form.slug}`}
+              value={`https://cal-com-clone-beta.vercel.app/book/${form.slug}`}
               className="w-full bg-[#111] border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-400"
             />
           </div>
