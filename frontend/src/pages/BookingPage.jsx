@@ -22,7 +22,7 @@ export default function BookingPage() {
   /* ================= FETCH EVENT ================= */
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/event-types/${slug}`)
+      .get(`https://calcom-kdz8.onrender.com/api/event-types/${slug}`)
       .then((res) => setEvent(res.data))
       .catch(() => alert("Event not found"));
   }, [slug]);
@@ -35,7 +35,7 @@ export default function BookingPage() {
 
     axios
       .get(
-        `http://localhost:5000/api/bookings/slots?slug=${slug}&date=${dateStr}`
+        `https://calcom-kdz8.onrender.com/api/bookings/slots?slug=${slug}&date=${dateStr}`
       )
       .then((res) => setSlots(res.data))
       .catch(() => setSlots([]));

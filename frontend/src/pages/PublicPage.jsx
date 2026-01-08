@@ -8,7 +8,7 @@ export default function PublicPage() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/event-types/public/list")
+      .get("https://calcom-kdz8.onrender.com/api/event-types/public/list")
       .then((res) => setEvents(res.data))
       .catch(() => setEvents([]));
   }, []);

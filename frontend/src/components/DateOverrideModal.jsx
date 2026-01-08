@@ -193,7 +193,9 @@ export default function DateOverrideModal({ open, onClose }) {
 
                   // Fetch current schedule
                   const cur = (
-                    await axios.get("http://localhost:5000/api/availability")
+                    await axios.get(
+                      "https://calcom-kdz8.onrender.com/api/availability"
+                    )
                   ).data;
 
                   const schedule = { ...(cur || {}) };
@@ -210,9 +212,12 @@ export default function DateOverrideModal({ open, onClose }) {
                   }
 
                   // Send back full schedule object
-                  await axios.put("http://localhost:5000/api/availability", {
-                    schedule,
-                  });
+                  await axios.put(
+                    "https://calcom-kdz8.onrender.com/api/availability",
+                    {
+                      schedule,
+                    }
+                  );
 
                   alert("Override saved");
                   onClose();

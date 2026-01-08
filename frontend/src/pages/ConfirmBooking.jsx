@@ -20,7 +20,7 @@ export default function ConfirmBooking() {
   /* ================= FETCH EVENT (SAFE ON REFRESH) ================= */
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/event-types/${slug}`)
+      .get(`https://calcom-kdz8.onrender.com/api/event-types/${slug}`)
       .then((res) => {
         setEvent(res.data);
         setName(res.data.host_name || "");
@@ -44,14 +44,17 @@ export default function ConfirmBooking() {
     try {
       setLoading(true);
 
-      const res = await axios.post("http://localhost:5000/api/bookings", {
-        event_type_id: event.id,
-        booker_name: name,
-        booker_email: email,
-        start_time: start.toISOString(),
-        end_time: end.toISOString(),
-        notes,
-      });
+      const res = await axios.post(
+        "https://calcom-kdz8.onrender.com/api/bookings",
+        {
+          event_type_id: event.id,
+          booker_name: name,
+          booker_email: email,
+          start_time: start.toISOString(),
+          end_time: end.toISOString(),
+          notes,
+        }
+      );
 
       navigate("/booking/success", {
         state: {

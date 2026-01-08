@@ -15,7 +15,7 @@ export default function Bookings() {
 
   const fetchBookings = () => {
     axios
-      .get("http://localhost:5000/api/bookings/dashboard")
+      .get("https://calcom-kdz8.onrender.com/api/bookings/dashboard")
       .then((res) => setBookings(res.data))
       .catch(() => setBookings([]));
   };
@@ -39,7 +39,9 @@ export default function Bookings() {
 
   const confirmCancel = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/bookings/${cancelId}`);
+      await axios.delete(
+        `https://calcom-kdz8.onrender.com/api/bookings/${cancelId}`
+      );
       setCancelId(null);
       fetchBookings();
     } catch {
