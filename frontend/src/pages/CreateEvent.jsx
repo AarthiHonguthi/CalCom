@@ -13,7 +13,9 @@ export default function CreateEvent() {
     description: "",
     duration: 15,
   });
-
+  useEffect(() => {
+    document.title = "Create Event | Clone Cal";
+  }, []);
   /* ================= LOCK BODY SCROLL (CRITICAL) ================= */
   useEffect(() => {
     document.body.style.overflow = "hidden";

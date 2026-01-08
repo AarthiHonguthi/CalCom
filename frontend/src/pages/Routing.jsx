@@ -1,4 +1,6 @@
 import Sidebar from "../components/Sidebar";
+import { useEffect } from "react";
+
 import {
   FileText,
   Route,
@@ -9,6 +11,10 @@ import {
 } from "lucide-react";
 
 export default function Routing() {
+    useEffect(() => {
+      document.title = "Routing | Clone Cal";
+    }, []);
+
   return (
     <div className="min-h-screen bg-[#0b0b0b] text-white">
       {/* Sidebar */}

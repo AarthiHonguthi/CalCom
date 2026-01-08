@@ -16,6 +16,7 @@ import AvailabilityEditor from "./pages/AvailabilityEditor.jsx";
 import ConfirmBooking from "./pages/ConfirmBooking.jsx";
 import BookingSuccess from "./pages/BookingSuccess";
 import PublicPage from "./pages/PublicPage";
+import { useEffect } from "react";
 
 import "./styles.css";
 

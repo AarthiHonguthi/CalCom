@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import DateOverrideModal from "../components/DateOverrideModal";
+import { useEffect } from "react";
 
 import { ChevronLeft, Plus, Copy, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -48,6 +49,9 @@ export default function AvailabilityEditor() {
     Friday: { enabled: true, slots: [{ start: "09:00", end: "17:00" }] },
     Saturday: { enabled: false, slots: [] },
   });
+   useEffect(() => {
+     document.title = "Edit Availability | Clone Cal";
+   }, []);
 
   const handleSave = async () => {
     try {

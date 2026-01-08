@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 
 export default function PublicPage() {
   const [events, setEvents] = useState([]);
+  useEffect(() => {
+    document.title = "Events | Clone Cal";
+  }, []);
+
 
   useEffect(() => {
     axios

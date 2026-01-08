@@ -1,7 +1,13 @@
 import { TrendingUp, TrendingDown, Users, BarChart3, Star } from "lucide-react";
+import { useEffect } from "react";
+
 import Sidebar from "../components/Sidebar";
 
 export default function Insights() {
+  useEffect(() => {
+    document.title = "Insights | Clone Cal";
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#0b0b0b] text-slate-200">
       <Sidebar />

@@ -2,8 +2,12 @@ import { Zap, Phone, Mail, MessageSquare } from "lucide-react";
 import Sidebar from "../components/Sidebar";
 import { Link} from "react-router-dom";
 import {Plus } from "lucide-react";
+import { useEffect } from "react";
 
 export default function Workflows() {
+  useEffect(() => {
+    document.title = "Workflows | Clone Cal";
+  }, []);
   return (
     <div className="min-h-screen bg-[#0b0b0b] text-slate-200">
       <Sidebar />

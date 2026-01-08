@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Success() {
+  useEffect(() => {
+    document.title = "Success | Clone Cal";
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="bg-white p-8 rounded-xl shadow-lg border border-slate-100 max-w-md w-full text-center">

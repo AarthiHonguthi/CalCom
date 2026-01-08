@@ -16,6 +16,11 @@ export default function ConfirmBooking() {
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (event?.title) {
+      document.title = "Confirm Booking | Clone Cal";
+    }
+  }, [event]);
 
   /* ================= FETCH EVENT (SAFE ON REFRESH) ================= */
   useEffect(() => {

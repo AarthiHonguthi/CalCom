@@ -13,6 +13,9 @@ export default function EditEvent() {
     duration: 15,
   });
   const [loading, setLoading] = useState(true);
+   useEffect(() => {
+     document.title = "Edit Event | Clone Cal";
+   }, []);
 
   // 1. Fetch existing data
   useEffect(() => {

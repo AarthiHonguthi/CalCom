@@ -18,6 +18,14 @@ export default function BookingPage() {
   const [event, setEvent] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [slots, setSlots] = useState([]);
+   useEffect(() => {
+     if (event?.title) {
+       document.title = `${event.title} | Clone Cal`;
+     } else {
+       document.title = "Booking | Clone Cal";
+     }
+   }, [event]);
+
 
   /* ================= FETCH EVENT ================= */
   useEffect(() => {

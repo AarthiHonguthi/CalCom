@@ -1,5 +1,7 @@
 // src/pages/BookingSuccess.jsx
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 import { Check, ChevronLeft } from "lucide-react";
 
 export default function BookingSuccess() {
@@ -12,6 +14,9 @@ export default function BookingSuccess() {
   }
 
   const { event, booking } = state;
+    useEffect(() => {
+      document.title = "Booking Success | Clone Cal";
+    }, []);
 
   return (
     <div className="min-h-screen bg-black text-white relative">

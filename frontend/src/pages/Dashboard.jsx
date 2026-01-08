@@ -12,6 +12,10 @@ export default function Dashboard() {
   const [toast, setToast] = useState(false);
   const [deleteId, setDeleteId] = useState(null); // ✅ FIXED
   const navigate = useNavigate();
+  useEffect(() => {
+    document.title = "Dashboard | Clone Cal";
+  }, []);
+
 
   /* ================= FETCH ================= */
   useEffect(() => {

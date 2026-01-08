@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Link, useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import {
@@ -10,6 +12,9 @@ import {
 
 export default function AppDetails() {
   const { appId } = useParams();
+  useEffect(() => {
+    document.title = "App Details | Clone Cal";
+  }, []);
 
   // dummy “details page” like the screenshot
   const title =

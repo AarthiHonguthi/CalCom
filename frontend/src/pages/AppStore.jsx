@@ -1,4 +1,6 @@
 import { useMemo, useState } from "react";
+import { useEffect } from "react";
+
 import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import {
@@ -158,6 +160,10 @@ function AppLogo({ type }) {
 
 export default function AppsStore() {
   const [q, setQ] = useState("");
+    useEffect(() => {
+      document.title = "App Store | Clone Cal";
+    }, []);
+
 
   const filteredPopular = useMemo(() => {
     const s = q.trim().toLowerCase();

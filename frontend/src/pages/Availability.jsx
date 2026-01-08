@@ -1,9 +1,13 @@
+import { useEffect } from "react";
 import { MoreHorizontal, Globe } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 
 export default function Availability() {
   const navigate = useNavigate();
+  useEffect(() => {
+    document.title = "Availability | Clone Cal";
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0b0b0b] text-slate-200">

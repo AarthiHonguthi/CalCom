@@ -12,6 +12,10 @@ export default function Bookings() {
   useEffect(() => {
     fetchBookings();
   }, []);
+  useEffect(() => {
+    document.title = "Bookings | Clone Cal";
+  }, []);
+
 
   const fetchBookings = () => {
     axios

@@ -9,8 +9,12 @@ import {
 import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
 import Sidebar from "../components/Sidebar";
+import { useEffect } from "react";
 
 export default function Teams() {
+  useEffect(() => {
+    document.title = "Teams | Clone Cal";
+  }, []);
   return (
     <div className="min-h-screen bg-[#0b0b0b] text-slate-200">
       <Sidebar />
