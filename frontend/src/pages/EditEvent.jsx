@@ -19,7 +19,7 @@ export default function EditEvent() {
     // Note: Since we don't have a direct "get by ID" API yet, we fetch all and filter
     // Ideally, your backend should have: app.get('/api/event-types/:id')
     axios
-      .get("http://localhost:5000/api/event-types")
+      .get("https://calcom-kdz8.onrender.com/api/event-types")
       .then((res) => {
         const event = res.data.find((e) => e.id === parseInt(id));
         if (event) {

@@ -1,10 +1,15 @@
-const express = require('express');
+const express = require("express");
+const {
+  getAvailableSlots,
+  createBooking,
+  getDashboardBookings,
+  cancelBooking,
+} = require("../controllers/bookingController");
 const router = express.Router();
-const { getAvailableSlots, createBooking, getBookings, cancelBooking } = require('../controllers/bookingController');
 
-router.get('/slots', getAvailableSlots);
-router.post('/', createBooking);
-router.get('/dashboard', getBookings);
-router.delete('/:id', cancelBooking);
+router.get("/slots", getAvailableSlots);
+router.post("/", createBooking);
+router.get("/dashboard", getDashboardBookings);
+router.delete("/:id", cancelBooking);
 
 module.exports = router;

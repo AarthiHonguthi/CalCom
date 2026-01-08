@@ -2,8 +2,15 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
+
 app.use(cors());
 app.use(express.json());
+app.use(
+  cors({
+    origin: ["https://cal-com-clone-beta.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 // Routes
 app.use('/api/event-types', require('./routes/eventRoutes'));

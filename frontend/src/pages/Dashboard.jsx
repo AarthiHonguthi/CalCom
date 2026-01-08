@@ -16,9 +16,10 @@ export default function Dashboard() {
   /* ================= FETCH ================= */
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/event-types")
-      .then((res) => setEvents(res.data))
-      .catch(() => setEvents([]));
+      axios
+        .get("https://calcom-kdz8.onrender.com/api/event-types")
+        .then((res) => setEvents(res.data))
+        .catch(() => setEvents([]));
   }, []);
 
   /* ================= SEARCH ================= */
