@@ -6,6 +6,7 @@ const app = express();
 app.use(
   cors({
     origin: [
+      "http://localhost:5173",
       "https://calcom-kdz8.onrender.com",
       "https://cal-com-clone-beta.vercel.app",
     ],
