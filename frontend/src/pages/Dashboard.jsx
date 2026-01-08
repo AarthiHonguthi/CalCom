@@ -16,10 +16,9 @@ export default function Dashboard() {
   /* ================= FETCH ================= */
   useEffect(() => {
     axios
-      axios
-        .get("https://calcom-kdz8.onrender.com/api/event-types")
-        .then((res) => setEvents(res.data))
-        .catch(() => setEvents([]));
+      .get("http://localhost:5000/api/event-types")
+      .then((res) => setEvents(res.data))
+      .catch(() => setEvents([]));
   }, []);
 
   /* ================= SEARCH ================= */
@@ -35,16 +34,32 @@ export default function Dashboard() {
   };
 
   /* ================= TOGGLE HIDE ================= */
-  const toggleHidden = (id) => {
-    setEvents((prev) =>
-      prev.map((e) => (e.id === id ? { ...e, hidden: !e.hidden } : e))
-    );
+  const toggleHidden = async (id) => {
+    // Optimistic update: flip locally first
+    setEvents((prev) => prev.map((e) => (e.id === id ? { ...e, hidden: !e.hidden } : e)));
+
+    try {
+      const ev = events.find((x) => x.id === id);
+      const newHidden = !ev?.hidden;
+      await axios.patch(`http://localhost:5000/api/event-types/${id}/visibility`, { hidden: newHidden });
+    } catch (err) {
+      console.error(err);
+      // Revert on failure
+      setEvents((prev) => prev.map((e) => (e.id === id ? { ...e, hidden: !e.hidden } : e)));
+      alert('Failed to update visibility');
+    }
   };
 
   /* ================= DELETE ================= */
-  const confirmDelete = () => {
-    setEvents((prev) => prev.filter((e) => e.id !== deleteId));
-    setDeleteId(null);
+  const confirmDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/api/event-types/${deleteId}`);
+      setEvents((prev) => prev.filter((e) => e.id !== deleteId));
+      setDeleteId(null);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete event");
+    }
   };
 
   /* ================= CLOSE MENU ON OUTSIDE CLICK ================= */
@@ -174,12 +189,7 @@ export default function Dashboard() {
                         >
                           Edit
                         </button>
-                        <button className="block w-full text-left px-4 py-2 text-sm hover:bg-[#1a1a1a]">
-                          Duplicate
-                        </button>
-                        <button className="block w-full text-left px-4 py-2 text-sm hover:bg-[#1a1a1a]">
-                          Embed
-                        </button>
+
                         <button
                           onClick={() => setDeleteId(event.id)}
                           className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-500/10"

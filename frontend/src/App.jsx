@@ -13,6 +13,9 @@ import Workflows from "./pages/Workflows.jsx";
 import Insights from "./pages/Insights.jsx";
 import Availability from "./pages/Availability.jsx";
 import AvailabilityEditor from "./pages/AvailabilityEditor.jsx";
+import ConfirmBooking from "./pages/ConfirmBooking.jsx";
+import BookingSuccess from "./pages/BookingSuccess";
+import PublicPage from "./pages/PublicPage";
 
 import "./styles.css";
 
@@ -35,6 +38,9 @@ function App() {
         <Route path="/insights" element={<Insights />} />
         <Route path="/availability" element={<Availability />} />
         <Route path="/availability/:id" element={<AvailabilityEditor />} />
+        <Route path="/book/:slug/confirm" element={<ConfirmBooking />} />
+        <Route path="/booking/success" element={<BookingSuccess />} />
+        <Route path="/public" element={<PublicPage />} />
       </Routes>
     </BrowserRouter>
   );

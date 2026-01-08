@@ -26,4 +26,5 @@ const updateAvailability = async (req, res) => {
     }
 };
 
+
 module.exports = { getAvailability, updateAvailability };

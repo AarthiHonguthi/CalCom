@@ -265,7 +265,10 @@ export default function Sidebar({ events = [] }) {
 
         {/* FOOTER */}
         <div className="border-t border-slate-800 p-3 space-y-1">
-          <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-[#262626] rounded-md">
+          <button
+            onClick={() => navigate("/public")}
+            className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-[#262626] rounded-md"
+          >
             <ExternalLink size={16} /> View public page
           </button>
           <button className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-[#262626] rounded-md">

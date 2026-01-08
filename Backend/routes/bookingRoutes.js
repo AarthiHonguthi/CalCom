@@ -5,6 +5,7 @@ const {
   getDashboardBookings,
   cancelBooking,
 } = require("../controllers/bookingController");
+
 const router = express.Router();
 
 router.get("/slots", getAvailableSlots);

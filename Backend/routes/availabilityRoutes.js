@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 
     if (result.rows.length === 0) return res.json({});
     res.json(result.rows[0].schedule);
-  } catch (err) {
+  } catch {
     res.status(500).send("Server Error");
   }
 });
@@ -31,7 +31,7 @@ router.put("/", async (req, res) => {
     );
 
     res.json({ success: true });
-  } catch (err) {
+  } catch {
     res.status(500).send("Server Error");
   }
 });

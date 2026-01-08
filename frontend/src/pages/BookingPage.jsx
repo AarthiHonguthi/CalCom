@@ -1,88 +1,94 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Video, Clock, Globe, ChevronLeft, ChevronRight } from "lucide-react";
 
-/* ---------- helpers ---------- */
+const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
 const formatTime = (iso) =>
   new Date(iso).toLocaleTimeString([], {
     hour: "numeric",
     minute: "2-digit",
   });
 
-const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-
 export default function BookingPage() {
   const { slug } = useParams();
+  const navigate = useNavigate();
 
   const [event, setEvent] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [slots, setSlots] = useState([]);
-  const [selectedSlot, setSelectedSlot] = useState(null);
 
-  /* ---------- fetch event ---------- */
+  /* ================= FETCH EVENT ================= */
   useEffect(() => {
     axios
-      .get(`https://calcom-kdz8.onrender.com/api/event-types/${slug}`)
+      .get(`http://localhost:5000/api/event-types/${slug}`)
       .then((res) => setEvent(res.data))
       .catch(() => alert("Event not found"));
   }, [slug]);
 
-  /* ---------- fetch slots ---------- */
+  /* ================= FETCH SLOTS ================= */
   useEffect(() => {
     if (!event) return;
+
     const dateStr = selectedDate.toLocaleDateString("en-CA");
 
     axios
       .get(
-        `https://calcom-kdz8.onrender.com/api/bookings/slots?date=${dateStr}&slug=${slug}`
+        `http://localhost:5000/api/bookings/slots?slug=${slug}&date=${dateStr}`
       )
-
       .then((res) => setSlots(res.data))
       .catch(() => setSlots([]));
-  }, [selectedDate, event, slug]);
+  }, [event, selectedDate, slug]);
 
   if (!event) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-slate-500 bg-black">
+      <div className="min-h-screen bg-black flex items-center justify-center text-slate-500">
         Loading…
       </div>
     );
   }
 
-  /* ---------- calendar rendering ---------- */
+  /* ================= CALENDAR ================= */
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth();
-  const today = new Date();
-
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
-      <div className="w-full max-w-5xl bg-[#0b0b0b] rounded-2xl border border-slate-800 grid grid-cols-1 md:grid-cols-3 overflow-hidden shadow-2xl">
+      <div className="w-full max-w-6xl bg-[#0b0b0b] rounded-2xl border border-slate-800 shadow-2xl grid grid-cols-1 md:grid-cols-[280px_1fr_280px] overflow-hidden">
         {/* ================= LEFT ================= */}
-        <div className="p-6 border-b md:border-b-0 md:border-r border-slate-800">
-          <div className="text-sm text-slate-400 mb-2">
-            {event.host_name || "Aarthi Honguthi"}
+        <div className="p-6 border-r border-slate-800">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center text-sm">
+              👤
+            </div>
+            <div className="text-sm text-slate-300">
+              {event.host_name || "Aarthi Honguthi"}
+            </div>
           </div>
 
-          <h1 className="text-xl font-semibold mb-3">{event.title}</h1>
+          <h1 className="text-lg font-semibold mb-3">{event.title}</h1>
 
-          <div className="flex items-center gap-2 text-slate-400 text-sm mb-2">
-            ⏱ {event.duration}m
+          <div className="flex items-center gap-2 text-sm text-slate-400 mb-2">
+            <Clock size={14} />
+            {event.duration} min
           </div>
 
-          <div className="flex items-center gap-2 text-slate-400 text-sm mb-2">
-            📹 Cal Video
+          <div className="flex items-center gap-2 text-sm text-slate-400 mb-2">
+            <Video size={14} />
+            Cal Video
           </div>
 
-          <div className="flex items-center gap-2 text-slate-400 text-sm">
-            🌍 Asia/Kolkata
+          <div className="flex items-center gap-2 text-sm text-slate-400">
+            <Globe size={14} />
+            Asia/Kolkata
           </div>
         </div>
 
         {/* ================= MIDDLE (CALENDAR) ================= */}
-        <div className="p-6 border-b md:border-b-0 md:border-r border-slate-800">
+        <div className="p-6 border-r border-slate-800">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-medium">
               {selectedDate.toLocaleString("default", {
@@ -90,18 +96,19 @@ export default function BookingPage() {
               })}{" "}
               {year}
             </h2>
-            <div className="flex gap-2">
+
+            <div className="flex gap-1">
               <button
                 onClick={() => setSelectedDate(new Date(year, month - 1, 1))}
-                className="text-slate-400 hover:text-white"
+                className="p-1 hover:bg-[#1a1a1a] rounded"
               >
-                ‹
+                <ChevronLeft size={16} />
               </button>
               <button
                 onClick={() => setSelectedDate(new Date(year, month + 1, 1))}
-                className="text-slate-400 hover:text-white"
+                className="p-1 hover:bg-[#1a1a1a] rounded"
               >
-                ›
+                <ChevronRight size={16} />
               </button>
             </div>
           </div>
@@ -122,21 +129,16 @@ export default function BookingPage() {
             {Array.from({ length: daysInMonth }).map((_, i) => {
               const day = i + 1;
               const date = new Date(year, month, day);
-              const disabled = date < today;
-
               const selected =
                 date.toDateString() === selectedDate.toDateString();
 
               return (
                 <button
                   key={day}
-                  disabled={disabled}
                   onClick={() => setSelectedDate(date)}
                   className={`h-10 rounded-md text-sm ${
                     selected
                       ? "bg-white text-black"
-                      : disabled
-                      ? "text-slate-600"
                       : "bg-[#1a1a1a] hover:bg-[#222]"
                   }`}
                 >
@@ -157,27 +159,30 @@ export default function BookingPage() {
                 month: "short",
               })}
             </h3>
-            <div className="flex gap-2 text-xs">
+
+            <div className="flex gap-1 text-xs">
               <span className="px-2 py-1 rounded bg-[#1a1a1a]">12h</span>
-              <span className="px-2 py-1 rounded text-slate-400">24h</span>
+              <span className="px-2 py-1 rounded text-slate-500">24h</span>
             </div>
           </div>
 
-          <div className="space-y-2 max-h-[360px] overflow-y-auto pr-2">
+          <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
             {slots.length === 0 ? (
               <div className="text-slate-500 text-sm">No availability</div>
             ) : (
               slots.map((slot) => (
                 <button
                   key={slot}
-                  onClick={() => setSelectedSlot(slot)}
-                  className={`w-full flex items-center gap-2 px-4 py-2 rounded-md border ${
-                    selectedSlot === slot
-                      ? "bg-white text-black"
-                      : "border-slate-700 hover:border-slate-500"
-                  }`}
+                  onClick={() =>
+                    navigate(
+                      `/book/${slug}/confirm?date=${selectedDate.toLocaleDateString(
+                        "en-CA"
+                      )}&slot=${encodeURIComponent(slot)}`
+                    )
+                  }
+                  className="w-full flex items-center gap-2 px-4 py-2 rounded-md border border-slate-700 hover:border-slate-500 transition"
                 >
-                  <span className="h-2 w-2 bg-green-500 rounded-full" />
+                  <span className="h-2 w-2 bg-emerald-400 rounded-full" />
                   {formatTime(slot)}
                 </button>
               ))
@@ -185,6 +190,9 @@ export default function BookingPage() {
           </div>
         </div>
       </div>
+
+      {/* FOOTER */}
+      <div className="absolute bottom-6 text-slate-500 text-sm">Cal.com</div>
     </div>
   );
 }

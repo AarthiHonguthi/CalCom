@@ -9,29 +9,25 @@ export default function Bookings() {
   const [activeTab, setActiveTab] = useState("upcoming");
   const [cancelId, setCancelId] = useState(null);
 
-  /* ================= FETCH ================= */
   useEffect(() => {
     fetchBookings();
   }, []);
 
   const fetchBookings = () => {
     axios
-      .get("https://calcom-kdz8.onrender.com/api/bookings/dashboard")
+      .get("http://localhost:5000/api/bookings/dashboard")
       .then((res) => setBookings(res.data))
       .catch(() => setBookings([]));
   };
 
-  /* ================= FILTERS ================= */
   const now = new Date();
 
   const upcoming = bookings.filter(
     (b) => b.status === "confirmed" && new Date(b.start_time) > now
   );
-
   const past = bookings.filter(
     (b) => new Date(b.start_time) <= now && b.status !== "cancelled"
   );
-
   const cancelled = bookings.filter((b) => b.status === "cancelled");
 
   const visible =
@@ -41,11 +37,9 @@ export default function Bookings() {
       ? past
       : cancelled;
 
-  /* ================= CANCEL ================= */
   const confirmCancel = async () => {
     try {
-      await axios.delete(
-        `https://calcom-kdz8.onrender.com/api/bookings/${cancelId}`);
+      await axios.delete(`http://localhost:5000/api/bookings/${cancelId}`);
       setCancelId(null);
       fetchBookings();
     } catch {
@@ -58,7 +52,6 @@ export default function Bookings() {
       <Sidebar />
 
       <main className="ml-64 px-8 py-6">
-        {/* HEADER */}
         <div className="mb-6">
           <h1 className="text-xl font-semibold text-white">Bookings</h1>
           <p className="text-sm text-slate-400 mt-1">
@@ -66,7 +59,6 @@ export default function Bookings() {
           </p>
         </div>
 
-        {/* TABS */}
         <div className="flex items-center gap-2 mb-6">
           {["upcoming", "past", "cancelled"].map((tab) => (
             <button
@@ -74,7 +66,7 @@ export default function Bookings() {
               onClick={() => setActiveTab(tab)}
               className={`px-3 py-1.5 rounded-md text-sm capitalize ${
                 activeTab === tab
-                  ? "bg-[#1a1a1a] text-white"
+                  ? "bg-[#404040] text-white"
                   : "text-slate-400 hover:text-white"
               }`}
             >
@@ -83,34 +75,24 @@ export default function Bookings() {
           ))}
         </div>
 
-        {/* CONTENT */}
         {visible.length === 0 ? (
-          /* ================= EMPTY STATE ================= */
           <div className="mt-10 border border-dashed border-slate-800 rounded-xl h-[360px] flex flex-col items-center justify-center text-center">
-            <div className="h-14 w-14 rounded-full bg-[#1a1a1a] flex items-center justify-center mb-4">
+            <div className="h-14 w-14 rounded-full bg-[#404040] flex items-center justify-center mb-4">
               <Calendar size={26} className="text-slate-400" />
             </div>
-
             <h3 className="text-lg font-semibold text-white">
               No {activeTab} bookings
             </h3>
-
-            <p className="text-sm text-slate-400 mt-1 max-w-sm">
-              You have no {activeTab} bookings. As soon as someone books a time
-              with you it will show up here.
-            </p>
           </div>
         ) : (
-          /* ================= LIST ================= */
-          <div className="space-y-3 max-w">
+          <div className="space-y-3">
             {visible.map((b) => (
               <div
                 key={b.id}
-                className="bg-[#111] border border-slate-800 rounded-lg px-4 py-4 flex justify-between items-center"
+                className="bg-[#404040] border border-slate-100 rounded-lg px-4 py-4 flex justify-between items-center"
               >
-                {/* LEFT */}
                 <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-full bg-[#1a1a1a] flex items-center justify-center">
+                  <div className="h-10 w-10 rounded-full bg-[#404040] flex items-center justify-center">
                     <Calendar size={18} />
                   </div>
 
@@ -122,14 +104,9 @@ export default function Bookings() {
                       {b.booker_name} •{" "}
                       {new Date(b.start_time).toLocaleString()}
                     </p>
-
-                    {b.status === "cancelled" && (
-                      <span className="text-xs text-red-400">Cancelled</span>
-                    )}
                   </div>
                 </div>
 
-                {/* RIGHT */}
                 {activeTab === "upcoming" && (
                   <button
                     onClick={() => setCancelId(b.id)}
@@ -144,7 +121,6 @@ export default function Bookings() {
         )}
       </main>
 
-      {/* REUSED CONFIRM MODAL */}
       <DeleteEventModal
         open={cancelId !== null}
         onClose={() => setCancelId(null)}

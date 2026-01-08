@@ -19,7 +19,7 @@ export default function EditEvent() {
     // Note: Since we don't have a direct "get by ID" API yet, we fetch all and filter
     // Ideally, your backend should have: app.get('/api/event-types/:id')
     axios
-      .get("https://calcom-kdz8.onrender.com/api/event-types")
+      .get("http://localhost:5000/api/event-types")
       .then((res) => {
         const event = res.data.find((e) => e.id === parseInt(id));
         if (event) {
@@ -36,11 +36,9 @@ export default function EditEvent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // NOTE: You need to add a PUT route in your backend for this to save!
-      // await axios.put(`http://localhost:5000/api/event-types/${id}`, form);
-      alert(
-        "Update simulated (Backend PUT route needed to persist). Redirecting..."
-      );
+      setLoading(true);
+      await axios.put(`http://localhost:5000/api/event-types/${id}`, form);
+      alert("Event updated");
       navigate("/");
     } catch (err) {
       alert("Error updating event.");

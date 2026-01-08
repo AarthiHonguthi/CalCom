@@ -1,93 +1,74 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { MoreHorizontal, Globe } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import { Link } from "react-router-dom";
-import { Plus } from "lucide-react";
 
 export default function Availability() {
-  const [schedule, setSchedule] = useState(null);
-
-  useEffect(() => {
-    const fetchAvailability = async () => {
-      try {
-        const res = await axios.get("https://calcom-kdz8.onrender.com/api/availability");
-        setSchedule(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchAvailability();
-  }, []);
+  const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#0b0b0b] text-white flex">
-      {/* Sidebar */}
+    <div className="min-h-screen bg-[#0b0b0b] text-slate-200">
       <Sidebar />
 
-      {/* MAIN CONTENT */}
-      <main
-        className="
-          flex-1
-          px-4 sm:px-6 lg:px-10
-          py-6
-          ml-0 lg:ml-64
-        "
-      >
+      <main className="ml-64 px-8 py-6">
         {/* HEADER */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-semibold">Availability</h1>
-            <p className="text-sm text-slate-400">
+            <h1 className="text-xl font-semibold text-white">Availability</h1>
+            <p className="text-sm text-slate-400 mt-1">
               Configure times when you are available for bookings.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <button className="px-4 py-1.5 rounded-full bg-[#1a1a1a] text-sm border border-slate-700">
+          <div className="flex items-center gap-2">
+            <button className="px-3 py-1.5 text-sm rounded-md bg-[#1a1a1a] text-white">
               My Availability
             </button>
-            <button className="px-4 py-1.5 rounded-full bg-[#0b0b0b] text-sm border border-slate-700 text-slate-400">
+            <button className="px-3 py-1.5 text-sm rounded-md text-slate-400 hover:text-white">
               Team Availability
             </button>
-
-            <Link
-              to="/create"
-              className="flex items-center gap-2 bg-white text-black px-4 py-2 rounded-full text-sm font-medium hover:bg-slate-200 transition"
-            >
-              <Plus size={16} /> New
-            </Link>
+            <button className="ml-2 px-3 py-1.5 text-sm rounded-md bg-white text-black font-medium">
+              + New
+            </button>
           </div>
         </div>
 
         {/* AVAILABILITY CARD */}
-        <div className="w-full rounded-xl border border-slate-700/70 bg-gradient-to-r from-[#111] to-[#0e0e0e] px-7 py-6 flex items-center justify-between hover:border-slate-500 transition">
+        <div
+          onClick={() => navigate("/availability/1")}
+          className="cursor-pointer bg-[#111] border border-slate-800 rounded-xl px-6 py-5 flex items-center justify-between hover:border-slate-600 transition"
+        >
+          {/* LEFT */}
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="font-medium">Aarthi Honguthi</span>
-              <span className="text-xs bg-[#1f1f1f] border border-slate-700 rounded-full px-2 py-0.5">
+              <h3 className="font-medium text-white">Aarthi Honguthi</h3>
+              <span className="text-xs px-2 py-0.5 rounded bg-[#1a1a1a] text-slate-300">
                 Default
               </span>
             </div>
 
-            <p className="text-sm text-slate-400">
+            <div className="text-sm text-slate-400">
               Mon – Fri, 9:00 AM – 5:00 PM
-            </p>
+            </div>
 
-            <div className="flex items-center gap-1 text-sm text-slate-500 mt-1">
-              <span>🌍</span>
-              <span>Europe/London</span>
+            <div className="flex items-center gap-1 mt-1 text-sm text-slate-400">
+              <Globe size={14} />
+              Europe/London
             </div>
           </div>
 
-          <button className="w-9 h-9 flex items-center justify-center rounded-md border border-slate-700 hover:bg-[#1f1f1f] transition">
-            ⋯
+          {/* RIGHT */}
+          <button
+            onClick={(e) => e.stopPropagation()}
+            className="w-9 h-9 flex items-center justify-center rounded-md border border-slate-700 hover:bg-[#1f1f1f]"
+          >
+            <MoreHorizontal size={18} />
           </button>
         </div>
 
-        {/* OUT OF OFFICE */}
-        <div className="mt-6 text-center text-sm text-slate-400">
+        {/* FOOTER LINK */}
+        <div className="mt-8 text-sm text-slate-400 text-center">
           Temporarily Out-Of-Office?{" "}
-          <span className="text-white underline cursor-pointer">
+          <span className="underline cursor-pointer hover:text-white">
             Add a redirect
           </span>
         </div>
