@@ -1,13 +1,13 @@
 // File: config/db.js
-const { Pool } = require('pg');
+const { Pool } = require("pg");
 
 const pool = new Pool({
-    user: 'postgres',           // Default user
-    host: 'localhost',          // Default host
-    database: 'cal_clone',      // Must match the DB you created in Step 3
-    password: 'Aarthi1234', // REPLACE THIS WITH YOUR PASSWORD
-    port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
+
 
 pool.query('SELECT NOW()', (err, res) => {
     if (err) {
