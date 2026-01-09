@@ -5,17 +5,22 @@ import Sidebar from "../components/Sidebar";
 
 export default function Availability() {
   const navigate = useNavigate();
+
   useEffect(() => {
     document.title = "Availability | Clone Cal";
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0b0b0b] text-slate-200">
-      <Sidebar />
+    <div className="min-h-screen bg-[#0b0b0b] text-slate-200 flex">
+      {/* SIDEBAR */}
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
 
-      <main className="ml-64 px-8 py-6">
+      {/* MAIN */}
+      <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 lg:ml-64">
         {/* HEADER */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-xl font-semibold text-white">Availability</h1>
             <p className="text-sm text-slate-400 mt-1">
@@ -23,14 +28,14 @@ export default function Availability() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button className="px-3 py-1.5 text-sm rounded-md bg-[#1a1a1a] text-white">
               My Availability
             </button>
             <button className="px-3 py-1.5 text-sm rounded-md text-slate-400 hover:text-white">
               Team Availability
             </button>
-            <button className="ml-2 px-3 py-1.5 text-sm rounded-md bg-white text-black font-medium">
+            <button className="px-3 py-1.5 text-sm rounded-md bg-white text-black font-medium">
               + New
             </button>
           </div>
@@ -39,11 +44,11 @@ export default function Availability() {
         {/* AVAILABILITY CARD */}
         <div
           onClick={() => navigate("/availability/1")}
-          className="cursor-pointer bg-[#111] border border-[#3c3c3c] rounded-xl px-6 py-5 flex items-center justify-between hover:border-[#171717] transition"
+          className="cursor-pointer bg-[#111] border border-[#3c3c3c] rounded-xl px-4 sm:px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 hover:border-[#171717] transition"
         >
           {/* LEFT */}
           <div>
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex flex-wrap items-center gap-2 mb-1">
               <h3 className="font-medium text-white">Aarthi Honguthi</h3>
               <span className="text-xs px-2 py-0.5 rounded bg-[#1a1a1a] text-slate-300">
                 Default
@@ -63,14 +68,14 @@ export default function Availability() {
           {/* RIGHT */}
           <button
             onClick={(e) => e.stopPropagation()}
-            className="w-9 h-9 flex items-center justify-center rounded-md border border-slate-700 hover:bg-[#1f1f1f]"
+            className="w-9 h-9 self-start sm:self-center flex items-center justify-center rounded-md border border-slate-700 hover:bg-[#1f1f1f]"
           >
             <MoreHorizontal size={18} />
           </button>
         </div>
 
         {/* FOOTER LINK */}
-        <div className="mt-8 text-sm text-slate-400 text-center">
+        <div className="mt-8 text-sm text-slate-400 text-center px-4">
           Temporarily Out-Of-Office?{" "}
           <span className="underline cursor-pointer hover:text-white">
             Add a redirect

@@ -10,14 +10,15 @@ export default function Dashboard() {
   const [query, setQuery] = useState("");
   const [openMenuId, setOpenMenuId] = useState(null);
   const [toast, setToast] = useState(false);
-  const [deleteId, setDeleteId] = useState(null); // ✅ FIXED
+  const [deleteId, setDeleteId] = useState(null);
+
   const navigate = useNavigate();
+
   useEffect(() => {
     document.title = "Dashboard | Clone Cal";
   }, []);
 
-
-  /* ================= FETCH ================= */
+  /* FETCH */
   useEffect(() => {
     axios
       .get("https://calcom-kdz8.onrender.com/api/event-types")
@@ -25,57 +26,47 @@ export default function Dashboard() {
       .catch(() => setEvents([]));
   }, []);
 
-  /* ================= SEARCH ================= */
+  /* SEARCH */
   const filteredEvents = events.filter((e) =>
     e.title.toLowerCase().includes(query.toLowerCase())
   );
 
-  /* ================= COPY LINK ================= */
+  /* COPY LINK */
   const copyLink = (slug) => {
     navigator.clipboard.writeText(`${window.location.origin}/${slug}`);
     setToast(true);
     setTimeout(() => setToast(false), 2000);
   };
 
-  /* ================= TOGGLE HIDE ================= */
+  /* TOGGLE VISIBILITY */
   const toggleHidden = async (id) => {
-    // Optimistic update: flip locally first
     setEvents((prev) =>
       prev.map((e) => (e.id === id ? { ...e, hidden: !e.hidden } : e))
     );
 
     try {
       const ev = events.find((x) => x.id === id);
-      const newHidden = !ev?.hidden;
       await axios.patch(
         `https://calcom-kdz8.onrender.com/api/event-types/${id}/visibility`,
-        { hidden: newHidden }
+        { hidden: !ev?.hidden }
       );
-    } catch (err) {
-      console.error(err);
-      // Revert on failure
+    } catch {
       setEvents((prev) =>
         prev.map((e) => (e.id === id ? { ...e, hidden: !e.hidden } : e))
       );
-      alert("Failed to update visibility");
     }
   };
 
-  /* ================= DELETE ================= */
+  /* DELETE */
   const confirmDelete = async () => {
-    try {
-      await axios.delete(
-        `https://calcom-kdz8.onrender.com/api/event-types/${deleteId}`
-      );
-      setEvents((prev) => prev.filter((e) => e.id !== deleteId));
-      setDeleteId(null);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to delete event");
-    }
+    await axios.delete(
+      `https://calcom-kdz8.onrender.com/api/event-types/${deleteId}`
+    );
+    setEvents((prev) => prev.filter((e) => e.id !== deleteId));
+    setDeleteId(null);
   };
 
-  /* ================= CLOSE MENU ON OUTSIDE CLICK ================= */
+  /* CLOSE MENU ON OUTSIDE CLICK */
   useEffect(() => {
     const close = () => setOpenMenuId(null);
     window.addEventListener("click", close);
@@ -83,12 +74,16 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0b0b0b] text-slate-200">
-      <Sidebar events={events} />
+    <div className="min-h-screen bg-[#0b0b0b] text-slate-200 flex">
+      {/* SIDEBAR (hidden on mobile) */}
+      <div className="hidden lg:block">
+        <Sidebar events={events} />
+      </div>
 
-      <main className="ml-64 px-8 py-6">
+      {/* MAIN */}
+      <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 lg:ml-64">
         {/* HEADER */}
-        <div className="flex items-start justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div>
             <h1 className="text-xl font-semibold text-white">Event Types</h1>
             <p className="text-sm text-slate-400 mt-1">
@@ -98,7 +93,7 @@ export default function Dashboard() {
 
           <Link
             to="/create"
-            className="flex items-center gap-2 bg-white text-black px-4 py-2 rounded-full text-sm font-medium hover:bg-slate-200 transition"
+            className="inline-flex items-center gap-2 bg-white text-black px-4 py-2 rounded-full text-sm font-medium hover:bg-slate-200 transition w-fit"
           >
             <Plus size={16} /> New
           </Link>
@@ -109,10 +104,10 @@ export default function Dashboard() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search"
-          className="mb-6 w-full max-w-sm bg-[#111] border border-[#3c3c3c] text-sm rounded-md px-4 py-2 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-600"
+          className="mb-6 w-full sm:max-w-sm bg-[#111] border border-[#3c3c3c] text-sm rounded-md px-4 py-2 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-600"
         />
 
-        {/* EVENT LIST */}
+        {/* EVENTS */}
         <div className="space-y-3">
           {filteredEvents.length === 0 ? (
             <div className="text-center text-slate-500 py-20">
@@ -122,26 +117,26 @@ export default function Dashboard() {
             filteredEvents.map((event) => (
               <div
                 key={event.id}
-                className="bg-[#111] border border-[#3c3c3c] rounded-lg px-4 py-4 flex items-center justify-between hover:border-[#171717] transition"
+                className="bg-[#111] border border-[#3c3c3c] rounded-lg px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
               >
                 {/* LEFT */}
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-semibold text-white">
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="text-sm font-semibold text-white truncate">
                       {event.title}
                     </h3>
-                    <span className="text-xs text-slate-500">
+                    <span className="text-xs text-slate-500 truncate">
                       /{event.slug}
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-3 text-xs text-slate-400 mt-1">
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 mt-1">
                     <span className="inline-flex items-center gap-1 bg-[#1a1a1a] px-2 py-0.5 rounded">
                       <Clock size={12} /> {event.duration}m
                     </span>
 
                     {event.hidden && (
-                      <span className="bg-[#222] text-slate-300 px-2 py-0.5 rounded">
+                      <span className="bg-[#222] px-2 py-0.5 rounded">
                         Hidden
                       </span>
                     )}
@@ -149,8 +144,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* RIGHT */}
-                <div className="flex items-center gap-3">
-                  {/* TOGGLE */}
+                <div className="flex items-center gap-2 flex-wrap justify-end">
                   <button
                     onClick={() => toggleHidden(event.id)}
                     className={`w-10 h-5 rounded-full relative transition ${
@@ -167,7 +161,6 @@ export default function Dashboard() {
                   <button
                     onClick={() => window.open(`/${event.slug}`, "_blank")}
                     className="p-2 rounded-md hover:bg-[#171717]"
-                    title="Preview"
                   >
                     <ExternalLink size={16} />
                   </button>
@@ -175,7 +168,6 @@ export default function Dashboard() {
                   <button
                     onClick={() => copyLink(event.slug)}
                     className="p-2 rounded-md hover:bg-[#171717]"
-                    title="Copy link"
                   >
                     <Copy size={16} />
                   </button>
@@ -230,7 +222,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* DELETE MODAL ✅ MUST BE INSIDE RETURN */}
+      {/* DELETE MODAL */}
       <DeleteEventModal
         open={deleteId !== null}
         onClose={() => setDeleteId(null)}

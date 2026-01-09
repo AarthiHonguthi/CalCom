@@ -1,6 +1,5 @@
 import Sidebar from "../components/Sidebar";
 import { useEffect } from "react";
-
 import {
   FileText,
   Route,
@@ -11,18 +10,17 @@ import {
 } from "lucide-react";
 
 export default function Routing() {
-    useEffect(() => {
-      document.title = "Routing | Clone Cal";
-    }, []);
+  useEffect(() => {
+    document.title = "Routing | Clone Cal";
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0b0b0b] text-white">
-      {/* Sidebar */}
       <Sidebar />
 
-      {/* Main content */}
-      <main className="ml-64 px-8 py-6">
-        {/* Header */}
+      {/* MAIN */}
+      <main className="px-4 sm:px-6 lg:px-8 py-6 lg:ml-64">
+        {/* HEADER */}
         <div>
           <h1 className="text-2xl font-semibold">Routing</h1>
           <p className="mt-1 text-sm text-white/60">
@@ -30,19 +28,18 @@ export default function Routing() {
           </p>
         </div>
 
-        {/* Hero banner */}
+        {/* HERO */}
         <div className="mt-6 rounded-2xl border border-white/10 bg-gradient-to-r from-white/5 to-white/0 overflow-hidden">
-          <div className="flex flex-col lg:flex-row items-stretch">
-            {/* Left */}
-            <div className="flex-1 p-8">
+          <div className="flex flex-col lg:flex-row">
+            {/* LEFT */}
+            <div className="flex-1 p-6 sm:p-8">
               <h2 className="text-xl font-semibold">Teams plan required</h2>
               <p className="mt-3 text-sm text-white/70 max-w-xl">
-                Routing forms are a great way to route your incoming leads to
-                the right person. Upgrade to a Teams plan to access this
-                feature.
+                Routing forms help route incoming leads to the right person.
+                Upgrade to a Teams plan to access this feature.
               </p>
 
-              <div className="mt-6 flex items-center gap-4">
+              <div className="mt-6 flex flex-wrap items-center gap-4">
                 <button className="rounded-full bg-white text-black px-5 py-2 text-sm font-medium hover:bg-white/90">
                   Upgrade
                 </button>
@@ -52,8 +49,8 @@ export default function Routing() {
               </div>
             </div>
 
-            {/* Right illustration placeholder */}
-            <div className="relative w-full lg:w-[420px] bg-white/5 border-l border-white/10 flex items-center justify-center">
+            {/* RIGHT */}
+            <div className="relative w-full lg:w-[420px] bg-white/5 border-t lg:border-t-0 lg:border-l border-white/10 flex items-center justify-center p-6">
               <div className="w-[260px] rounded-xl bg-white p-4 shadow-lg">
                 <div className="h-8 rounded bg-gray-100 mb-2" />
                 <div className="h-8 rounded bg-gray-100 mb-2" />
@@ -63,37 +60,37 @@ export default function Routing() {
           </div>
         </div>
 
-        {/* Feature cards */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* FEATURES */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           <FeatureCard
             icon={<FileText className="h-5 w-5 text-orange-400" />}
             title="Create your first form"
-            desc="With Routing Forms you can ask qualifying questions and route to the correct person or event type."
+            desc="Ask qualifying questions and route users correctly."
           />
           <FeatureCard
             icon={<Route className="h-5 w-5 text-green-400" />}
             title="Create your first route"
-            desc="Route to the right person based on the answers to your form."
+            desc="Route users based on their form answers."
           />
           <FeatureCard
             icon={<BarChart2 className="h-5 w-5 text-blue-400" />}
             title="Reporting"
-            desc="See all incoming form data and download it as a CSV."
+            desc="View all incoming data and export it as CSV."
           />
           <FeatureCard
             icon={<CheckCircle className="h-5 w-5 text-teal-400" />}
-            title="Test Routing Form"
-            desc="Test your routing form without submitting any data."
+            title="Test routing form"
+            desc="Safely test your form without storing responses."
           />
           <FeatureCard
             icon={<Mail className="h-5 w-5 text-yellow-400" />}
-            title="Send Email to Owner"
-            desc="Sends an email to the owner when the form is submitted."
+            title="Email notifications"
+            desc="Notify owners when a form is submitted."
           />
           <FeatureCard
             icon={<Download className="h-5 w-5 text-purple-400" />}
             title="Download responses"
-            desc="Download all responses to your form in CSV format."
+            desc="Export responses anytime as CSV files."
           />
         </div>
 
@@ -102,6 +99,8 @@ export default function Routing() {
     </div>
   );
 }
+
+/* FEATURE CARD */
 function FeatureCard({ icon, title, desc }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/7 transition">

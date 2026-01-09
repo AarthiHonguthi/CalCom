@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 export default function EditEvent() {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [form, setForm] = useState({
     title: "",
     slug: "",
@@ -13,27 +14,29 @@ export default function EditEvent() {
     duration: 15,
   });
   const [loading, setLoading] = useState(true);
-   useEffect(() => {
-     document.title = "Edit Event | Clone Cal";
-   }, []);
 
-  // 1. Fetch existing data
   useEffect(() => {
-    // Note: Since we don't have a direct "get by ID" API yet, we fetch all and filter
-    // Ideally, your backend should have: app.get('/api/event-types/:id')
+    document.title = "Edit Event | Clone Cal";
+  }, []);
+
+  /* FETCH EXISTING EVENT */
+  useEffect(() => {
     axios
       .get("https://calcom-kdz8.onrender.com/api/event-types")
       .then((res) => {
-        const event = res.data.find((e) => e.id === parseInt(id));
-        if (event) {
-          setForm(event);
-          setLoading(false);
-        } else {
+        const event = res.data.find((e) => e.id === Number(id));
+        if (!event) {
           alert("Event not found");
           navigate("/");
+          return;
         }
+        setForm(event);
+        setLoading(false);
       })
-      .catch((err) => console.error(err));
+      .catch(() => {
+        alert("Failed to load event");
+        navigate("/");
+      });
   }, [id, navigate]);
 
   const handleSubmit = async (e) => {
@@ -46,80 +49,95 @@ export default function EditEvent() {
       );
       alert("Event updated");
       navigate("/");
-    } catch (err) {
-      alert("Error updating event.");
+    } catch {
+      alert("Error updating event");
+      setLoading(false);
     }
   };
 
-  if (loading) return <div className="p-10 text-center">Loading...</div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center text-slate-500">
+        Loading…
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-slate-50 py-10 px-4">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-black text-white px-4 py-10">
+      <div className="max-w-xl mx-auto">
+        {/* BACK */}
         <button
           onClick={() => navigate("/")}
-          className="flex items-center text-sm text-slate-500 hover:text-slate-900 mb-6"
+          className="flex items-center gap-1 text-sm text-slate-400 hover:text-white mb-6"
         >
-          <ArrowLeft size={16} className="mr-1" /> Back
+          <ArrowLeft size={16} />
+          Back
         </button>
 
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
-          <h1 className="text-2xl font-bold text-slate-900 mb-6">
-            Edit Event Type
-          </h1>
+        {/* CARD */}
+        <div className="bg-[#0b0b0b] border border-[#3c3c3c] rounded-2xl p-6 sm:p-8 shadow-xl">
+          <h1 className="text-xl font-semibold mb-6">Edit Event Type</h1>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* TITLE */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
-                Title
-              </label>
+              <label className="block text-sm mb-1 text-slate-300">Title</label>
               <input
                 required
-                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-slate-900 outline-none"
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
+                className="w-full bg-[#111] border border-slate-700 rounded-md px-3 py-2 text-sm outline-none focus:border-white"
               />
             </div>
 
-            {/* Same form fields as CreateEvent... */}
+            {/* DESCRIPTION */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label className="block text-sm mb-1 text-slate-300">
                 Description
               </label>
               <textarea
-                className="w-full px-3 py-2 border border-slate-300 rounded-md outline-none h-24"
+                rows={4}
                 value={form.description}
                 onChange={(e) =>
                   setForm({ ...form, description: e.target.value })
                 }
+                className="w-full bg-[#111] border border-slate-700 rounded-md px-3 py-2 text-sm outline-none focus:border-white resize-none"
               />
             </div>
 
+            {/* DURATION */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
-                Duration (min)
+              <label className="block text-sm mb-1 text-slate-300">
+                Duration (minutes)
               </label>
               <input
                 type="number"
-                className="w-full px-3 py-2 border border-slate-300 rounded-md outline-none"
+                min={5}
                 value={form.duration}
                 onChange={(e) =>
-                  setForm({ ...form, duration: parseInt(e.target.value) })
+                  setForm({
+                    ...form,
+                    duration: Number(e.target.value),
+                  })
                 }
+                className="w-full bg-[#111] border border-slate-700 rounded-md px-3 py-2 text-sm outline-none focus:border-white"
               />
             </div>
 
-            <div className="flex gap-4">
+            {/* ACTIONS */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <button
                 type="submit"
-                className="flex-1 bg-slate-900 text-white py-2.5 rounded-md font-semibold hover:bg-slate-800"
+                className="bg-white text-black px-6 py-2 rounded-md font-medium hover:bg-slate-200 transition"
               >
                 Save Changes
               </button>
+
               <button
                 type="button"
                 onClick={() => navigate("/")}
-                className="px-6 py-2.5 rounded-md font-semibold text-slate-700 hover:bg-slate-100 border border-slate-300"
+                className="px-6 py-2 rounded-md text-slate-300 border border-slate-700 hover:bg-[#171717]"
               >
                 Cancel
               </button>

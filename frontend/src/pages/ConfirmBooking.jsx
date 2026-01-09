@@ -16,13 +16,12 @@ export default function ConfirmBooking() {
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    if (event?.title) {
-      document.title = "Confirm Booking | Clone Cal";
-    }
-  }, [event]);
 
-  /* ================= FETCH EVENT (SAFE ON REFRESH) ================= */
+  useEffect(() => {
+    document.title = "Confirm Booking | Clone Cal";
+  }, []);
+
+  /* FETCH EVENT */
   useEffect(() => {
     axios
       .get(`https://calcom-kdz8.onrender.com/api/event-types/${slug}`)
@@ -44,7 +43,7 @@ export default function ConfirmBooking() {
   const start = new Date(slot);
   const end = new Date(start.getTime() + event.duration * 60000);
 
-  /* ================= CONFIRM ================= */
+  /* CONFIRM */
   const handleConfirm = async () => {
     try {
       setLoading(true);
@@ -76,10 +75,10 @@ export default function ConfirmBooking() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-6 text-white">
+    <div className="min-h-screen bg-black flex items-center justify-center px-4 sm:px-6 text-white relative">
       <div className="w-full max-w-4xl bg-[#0b0b0b] border border-[#3c3c3c] rounded-2xl grid grid-cols-1 md:grid-cols-2 overflow-hidden shadow-2xl">
-        {/* ================= LEFT SUMMARY ================= */}
-        <div className="p-6 border-b md:border-b-0 md:border-r border-[#3c3c3c]">
+        {/* LEFT SUMMARY */}
+        <div className="p-5 sm:p-6 border-b md:border-b-0 md:border-r border-[#3c3c3c]">
           <div className="flex items-center gap-3 mb-5">
             <div className="h-9 w-9 rounded-full bg-slate-700 flex items-center justify-center">
               👤
@@ -133,8 +132,8 @@ export default function ConfirmBooking() {
           </div>
         </div>
 
-        {/* ================= RIGHT FORM ================= */}
-        <div className="p-6">
+        {/* RIGHT FORM */}
+        <div className="p-5 sm:p-6">
           <div className="mb-4">
             <label className="block text-sm mb-1">Your name *</label>
             <input
@@ -170,7 +169,7 @@ export default function ConfirmBooking() {
             <span className="underline cursor-pointer">Privacy Policy</span>.
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <button
               onClick={() => navigate(-1)}
               className="text-sm text-slate-400 hover:text-white"
@@ -190,7 +189,7 @@ export default function ConfirmBooking() {
       </div>
 
       {/* FOOTER */}
-      <div className="absolute bottom-6 text-slate-500 text-sm">Cal.com</div>
+      <div className="absolute bottom-4 text-slate-500 text-sm">Cal.com</div>
     </div>
   );
 }

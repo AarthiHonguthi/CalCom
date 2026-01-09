@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import DateOverrideModal from "../components/DateOverrideModal";
-import { useEffect } from "react";
-
 import { ChevronLeft, Plus, Copy, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,12 +10,14 @@ function Toggle({ enabled, onChange }) {
   return (
     <button
       onClick={() => onChange(!enabled)}
-      className={`relative inline-flex h-6 w-11 items-center rounded-full transition
-        ${enabled ? "bg-white" : "bg-[#1f1f1f]"}`}
+      className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
+        enabled ? "bg-white" : "bg-[#1f1f1f]"
+      }`}
     >
       <span
-        className={`inline-block h-4 w-4 transform rounded-full bg-black transition
-          ${enabled ? "translate-x-6" : "translate-x-1"}`}
+        className={`inline-block h-4 w-4 transform rounded-full bg-black transition ${
+          enabled ? "translate-x-6" : "translate-x-1"
+        }`}
       />
     </button>
   );
@@ -49,14 +49,14 @@ export default function AvailabilityEditor() {
     Friday: { enabled: true, slots: [{ start: "09:00", end: "17:00" }] },
     Saturday: { enabled: false, slots: [] },
   });
-   useEffect(() => {
-     document.title = "Edit Availability | Clone Cal";
-   }, []);
+
+  useEffect(() => {
+    document.title = "Edit Availability | Clone Cal";
+  }, []);
 
   const handleSave = async () => {
     try {
       setSaving(true);
-
       const payloadSchedule = {};
       DAYS.forEach((day, i) => {
         const d = schedule[day];
@@ -68,8 +68,7 @@ export default function AvailabilityEditor() {
       });
 
       alert("Availability saved");
-    } catch (err) {
-      console.error(err);
+    } catch {
       alert("Failed to save availability");
     } finally {
       setSaving(false);
@@ -78,11 +77,15 @@ export default function AvailabilityEditor() {
 
   return (
     <div className="min-h-screen bg-[#0b0b0b] text-white flex">
-      <Sidebar />
+      {/* SIDEBAR */}
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
 
-      <main className="flex-1 px-4 sm:px-6 lg:px-10 py-6 ml-0 lg:ml-64">
+      {/* MAIN */}
+      <main className="flex-1 px-4 sm:px-6 lg:px-10 py-6 lg:ml-64">
         {/* HEADER */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate(-1)}
@@ -101,19 +104,19 @@ export default function AvailabilityEditor() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-4 py-2 rounded-md border border-slate-700 hover:bg-[#171717] disabled:opacity-60"
+            className="px-4 py-2 rounded-md border border-slate-700 hover:bg-[#171717] disabled:opacity-60 w-fit"
           >
             {saving ? "Saving..." : "Save"}
           </button>
         </div>
 
-        {/* MAIN GRID */}
+        {/* GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
           {/* LEFT */}
-          <div className="border border-[#3c3c3c] rounded-xl p-5 space-y-4">
+          <div className="border border-[#3c3c3c] rounded-xl p-4 sm:p-5 space-y-5">
             {DAYS.map((day, idx) => (
-              <div key={day} className="flex justify-between items-start">
-                <div className="flex items-center gap-4 w-40">
+              <div key={day} className="space-y-3">
+                <div className="flex items-center gap-4">
                   <Toggle
                     enabled={schedule[day].enabled}
                     onChange={(val) =>
@@ -123,13 +126,16 @@ export default function AvailabilityEditor() {
                       })
                     }
                   />
-                  <span>{day}</span>
+                  <span className="font-medium">{day}</span>
                 </div>
 
                 {schedule[day].enabled && (
-                  <div className="flex flex-col gap-2">
+                  <div className="space-y-2 pl-2 sm:pl-12">
                     {schedule[day].slots.map((slot, sIdx) => (
-                      <div key={sIdx} className="flex items-center gap-2">
+                      <div
+                        key={sIdx}
+                        className="flex flex-wrap items-center gap-2"
+                      >
                         <input
                           type="time"
                           value={slot.start}
@@ -174,7 +180,6 @@ export default function AvailabilityEditor() {
                             })
                           }
                           className="p-2 hover:bg-[#171717] rounded-md"
-                          title="Add slot"
                         >
                           <Plus size={14} />
                         </button>
@@ -192,7 +197,6 @@ export default function AvailabilityEditor() {
                             });
                           }}
                           className="p-2 hover:bg-[#171717] rounded-md"
-                          title="Copy previous day"
                         >
                           <Copy size={14} />
                         </button>
@@ -208,7 +212,6 @@ export default function AvailabilityEditor() {
                             });
                           }}
                           className="p-2 hover:bg-red-500/10 rounded-md text-red-400"
-                          title="Delete slot"
                         >
                           <Trash2 size={14} />
                         </button>

@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 import { Link, useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import {
@@ -12,11 +11,11 @@ import {
 
 export default function AppDetails() {
   const { appId } = useParams();
+
   useEffect(() => {
     document.title = "App Details | Clone Cal";
   }, []);
 
-  // dummy “details page” like the screenshot
   const title =
     appId === "google-calendar"
       ? "Google Calendar"
@@ -26,12 +25,16 @@ export default function AppDetails() {
           .join(" ");
 
   return (
-    <div className="min-h-screen bg-[#0b0b0b] text-white">
-      <Sidebar />
+    <div className="min-h-screen bg-[#0b0b0b] text-white flex">
+      {/* SIDEBAR */}
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
 
-      <main className="ml-64 min-h-screen px-8 py-6">
-        {/* Back */}
-        <div className="flex items-center gap-3 text-white/80">
+      {/* MAIN */}
+      <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 lg:ml-64">
+        {/* BACK */}
+        <div className="flex items-center gap-2 text-white/80">
           <Link
             to="/apps"
             className="inline-flex items-center gap-2 hover:text-white"
@@ -41,15 +44,18 @@ export default function AppDetails() {
           </Link>
         </div>
 
-        {/* Header */}
-        <div className="mt-6 flex items-start gap-6">
-          <div className="h-14 w-14 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center text-lg font-black">
+        {/* HEADER */}
+        <div className="mt-6 flex flex-col sm:flex-row sm:items-start gap-6">
+          <div className="h-14 w-14 shrink-0 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center text-lg font-black">
             31
           </div>
 
-          <div className="flex-1">
-            <h1 className="text-3xl font-semibold">{title}</h1>
-            <div className="mt-2 flex items-center gap-2 text-xs text-white/60">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-2xl sm:text-3xl font-semibold truncate">
+              {title}
+            </h1>
+
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-white/60">
               <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1">
                 Calendar
               </span>
@@ -57,7 +63,7 @@ export default function AppDetails() {
               <span>Published by Cal.com</span>
             </div>
 
-            <div className="mt-4 flex items-center gap-3">
+            <div className="mt-4 flex flex-wrap items-center gap-3">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
                 <CheckCircle2 className="h-4 w-4" />1 active install
               </span>
@@ -69,10 +75,10 @@ export default function AppDetails() {
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="mt-10 h-px w-full bg-white/10" />
+        {/* DIVIDER */}
+        <div className="mt-8 sm:mt-10 h-px w-full bg-white/10" />
 
-        {/* Content blocks */}
+        {/* CONTENT */}
         <div className="mt-8 max-w-3xl">
           <div className="text-sm text-white/70">
             items:
@@ -99,11 +105,11 @@ export default function AppDetails() {
           <div className="mt-8">
             <div className="text-sm font-semibold">Contact</div>
             <div className="mt-3 space-y-2 text-sm text-white/75">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 break-all">
                 <ExternalLink className="h-4 w-4 text-white/60" />
                 <span>cal.com/</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 break-all">
                 <Mail className="h-4 w-4 text-white/60" />
                 <span>help@cal.com</span>
               </div>

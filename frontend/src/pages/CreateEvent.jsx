@@ -13,10 +13,12 @@ export default function CreateEvent() {
     description: "",
     duration: 15,
   });
+
   useEffect(() => {
     document.title = "Create Event | Clone Cal";
   }, []);
-  /* ================= LOCK BODY SCROLL (CRITICAL) ================= */
+
+  /* LOCK BODY SCROLL */
   useEffect(() => {
     document.body.style.overflow = "hidden";
     document.body.style.background = "#000";
@@ -26,7 +28,7 @@ export default function CreateEvent() {
     };
   }, []);
 
-  /* ================= AUTO SLUG ================= */
+  /* AUTO SLUG */
   useEffect(() => {
     const slug = form.title
       .toLowerCase()
@@ -35,26 +37,27 @@ export default function CreateEvent() {
     setForm((prev) => ({ ...prev, slug }));
   }, [form.title]);
 
-  /* ================= SUBMIT ================= */
+  /* SUBMIT */
   const handleSubmit = async () => {
     try {
-      await axios.post("https://calcom-kdz8.onrender.com/api/event-types", form);
-
+      await axios.post(
+        "https://calcom-kdz8.onrender.com/api/event-types",
+        form
+      );
       navigate("/");
     } catch {
       alert("Error creating event");
     }
   };
 
-  /* ================= MODAL (PORTAL) ================= */
   return createPortal(
-    <div className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/80">
-      {/* MODAL BOX */}
+    <div className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/80 px-4">
+      {/* MODAL */}
       <div className="w-full max-w-xl rounded-2xl bg-[#0b0b0b] border border-[#3c3c3c] shadow-2xl">
         {/* HEADER */}
-        <div className="flex items-start justify-between px-6 py-4 border-b border-[#3c3c3c]">
+        <div className="flex items-start justify-between gap-4 px-5 sm:px-6 py-4 border-b border-[#3c3c3c]">
           <div>
-            <h2 className="text-lg font-semibold text-white">
+            <h2 className="text-base sm:text-lg font-semibold text-white">
               Add a new event type
             </h2>
             <p className="text-sm text-slate-400 mt-1">
@@ -64,14 +67,14 @@ export default function CreateEvent() {
 
           <button
             onClick={() => navigate("/")}
-            className="text-slate-400 hover:text-white"
+            className="text-slate-400 hover:text-white shrink-0"
           >
             <X size={18} />
           </button>
         </div>
 
         {/* BODY */}
-        <div className="px-6 py-6 space-y-5">
+        <div className="px-5 sm:px-6 py-5 space-y-5">
           {/* TITLE */}
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-1">
@@ -93,7 +96,7 @@ export default function CreateEvent() {
             <input
               readOnly
               value={`https://cal-com-clone-beta.vercel.app/book/${form.slug}`}
-              className="w-full bg-[#111] border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-400"
+              className="w-full bg-[#111] border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-400 truncate"
             />
           </div>
 
@@ -118,7 +121,7 @@ export default function CreateEvent() {
             <label className="block text-sm font-medium text-slate-300 mb-1">
               Duration
             </label>
-            <div className="relative w-40">
+            <div className="relative w-full sm:w-40">
               <input
                 type="number"
                 min={5}
@@ -139,7 +142,7 @@ export default function CreateEvent() {
         </div>
 
         {/* FOOTER */}
-        <div className="flex justify-end gap-3 px-6 py-4 border-t border-[#3c3c3c]">
+        <div className="flex flex-col sm:flex-row justify-end gap-3 px-5 sm:px-6 py-4 border-t border-[#3c3c3c]">
           <button
             onClick={() => navigate("/")}
             className="text-sm text-slate-400 hover:text-white"

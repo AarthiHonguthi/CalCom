@@ -18,16 +18,14 @@ export default function BookingPage() {
   const [event, setEvent] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [slots, setSlots] = useState([]);
-   useEffect(() => {
-     if (event?.title) {
-       document.title = `${event.title} | Clone Cal`;
-     } else {
-       document.title = "Booking | Clone Cal";
-     }
-   }, [event]);
 
+  useEffect(() => {
+    document.title = event?.title
+      ? `${event.title} | Clone Cal`
+      : "Booking | Clone Cal";
+  }, [event]);
 
-  /* ================= FETCH EVENT ================= */
+  /* FETCH EVENT */
   useEffect(() => {
     axios
       .get(`https://calcom-kdz8.onrender.com/api/event-types/${slug}`)
@@ -35,10 +33,9 @@ export default function BookingPage() {
       .catch(() => alert("Event not found"));
   }, [slug]);
 
-  /* ================= FETCH SLOTS ================= */
+  /* FETCH SLOTS */
   useEffect(() => {
     if (!event) return;
-
     const dateStr = selectedDate.toLocaleDateString("en-CA");
 
     axios
@@ -57,17 +54,17 @@ export default function BookingPage() {
     );
   }
 
-  /* ================= CALENDAR ================= */
+  /* CALENDAR DATA */
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth();
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
-      <div className="w-full max-w-6xl bg-[#0b0b0b] rounded-2xl border border-[#3c3c3c] shadow-2xl grid grid-cols-1 md:grid-cols-[280px_1fr_280px] overflow-hidden">
-        {/* ================= LEFT ================= */}
-        <div className="p-6 border-r border-[#3c3c3c]">
+    <div className="min-h-screen bg-black text-white flex items-center justify-center px-4 sm:px-6">
+      <div className="w-full max-w-6xl bg-[#0b0b0b] rounded-2xl border border-[#3c3c3c] shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-[280px_1fr_280px]">
+        {/* LEFT */}
+        <div className="p-6 border-b md:border-b-0 md:border-r border-[#3c3c3c]">
           <div className="flex items-center gap-2 mb-4">
             <div className="h-8 w-8 rounded-full bg-slate-700 flex items-center justify-center text-sm">
               👤
@@ -80,29 +77,23 @@ export default function BookingPage() {
           <h1 className="text-lg font-semibold mb-3">{event.title}</h1>
 
           <div className="flex items-center gap-2 text-sm text-slate-400 mb-2">
-            <Clock size={14} />
-            {event.duration} min
+            <Clock size={14} /> {event.duration} min
           </div>
 
           <div className="flex items-center gap-2 text-sm text-slate-400 mb-2">
-            <Video size={14} />
-            Cal Video
+            <Video size={14} /> Cal Video
           </div>
 
           <div className="flex items-center gap-2 text-sm text-slate-400">
-            <Globe size={14} />
-            Asia/Kolkata
+            <Globe size={14} /> Asia/Kolkata
           </div>
         </div>
 
-        {/* ================= MIDDLE (CALENDAR) ================= */}
-        <div className="p-6 border-r border-[#3c3c3c]">
+        {/* MIDDLE (CALENDAR) */}
+        <div className="p-6 border-b md:border-b-0 md:border-r border-[#3c3c3c]">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-medium">
-              {selectedDate.toLocaleString("default", {
-                month: "long",
-              })}{" "}
-              {year}
+              {selectedDate.toLocaleString("default", { month: "long" })} {year}
             </h2>
 
             <div className="flex gap-1">
@@ -157,7 +148,7 @@ export default function BookingPage() {
           </div>
         </div>
 
-        {/* ================= RIGHT (SLOTS) ================= */}
+        {/* RIGHT (SLOTS) */}
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-medium">
@@ -174,7 +165,7 @@ export default function BookingPage() {
             </div>
           </div>
 
-          <div className="space-y-2 max-h-[420px] overflow-y-auto pr-1">
+          <div className="space-y-2 max-h-[320px] sm:max-h-[420px] overflow-y-auto pr-1">
             {slots.length === 0 ? (
               <div className="text-slate-500 text-sm">No availability</div>
             ) : (
@@ -200,7 +191,7 @@ export default function BookingPage() {
       </div>
 
       {/* FOOTER */}
-      <div className="absolute bottom-6 text-slate-500 text-sm">Cal.com</div>
+      <div className="absolute bottom-4 text-slate-500 text-sm">Cal.com</div>
     </div>
   );
 }
