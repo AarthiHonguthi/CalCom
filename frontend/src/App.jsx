@@ -16,7 +16,7 @@ import AvailabilityEditor from "./pages/AvailabilityEditor.jsx";
 import ConfirmBooking from "./pages/ConfirmBooking.jsx";
 import BookingSuccess from "./pages/BookingSuccess";
 import PublicPage from "./pages/PublicPage";
-import { useEffect } from "react";
+
 
 import "./styles.css";
 
@@ -42,6 +42,7 @@ function App() {
         <Route path="/book/:slug/confirm" element={<ConfirmBooking />} />
         <Route path="/booking/success" element={<BookingSuccess />} />
         <Route path="/public" element={<PublicPage />} />
+
       </Routes>
     </BrowserRouter>
   );
